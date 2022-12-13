@@ -133,7 +133,8 @@
                 <div class="contact-item animate" data-animation="scaleAppear">
                     <h3 class="special-heading">User<span class="text-gradient">Signup</span></h3>
                     <div class="divider-35"></div>
-                    <form class="contact-form c-mb-30 c-gutter-20" method="post" action="">
+                    <p class="text-center"><?php display_message(); ?></p>
+                    <form class="c-mb-30 c-gutter-20" method="post" action="">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group has-placeholder">
@@ -164,8 +165,8 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group has-placeholder">
-                                    <input type="checkbox" aria-required="true" size="30" value="" name="accept"
-                                        id="accept">&nbsp; On signup you have accepted to our <br>
+                                    <input type="checkbox" aria-required="true" name="accept" id="accept">&nbsp; On
+                                    signup you have accepted to our <br>
                                     <a href="#">Terms&Conditions</a>
                                 </div>
                             </div>
@@ -186,4 +187,5 @@
         </div>
     </div>
 </section>
+<?php user_signup(); ?>
 <?php require(TEMPLATE_FRONT . DS . "footer.php"); ?>

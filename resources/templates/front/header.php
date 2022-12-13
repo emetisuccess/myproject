@@ -25,6 +25,7 @@
                             <li>
                                 <a href="services.php">Services</a>
                                 <ul>
+                                    <h5 class="text-white">Coming Soon</h5>
                                     <li>
                                         <a href="#">Towing</a>
                                     </li>
@@ -45,6 +46,7 @@
                             <li>
                                 <a href="insurance.php">Insurance</a>
                                 <ul>
+                                    <h5 class="text-white">Coming Soon</h5>
                                     <li>
                                         <a href="#">Flood Insurance</a>
                                     </li>
@@ -71,9 +73,24 @@
                             <li>
                                 <a href="cart.php">
                                     <i class="fa fa-shopping-bag"></i>
-                                    <sup class="text-white">1</sup>
+                                    <sup class="text-white" id="cart_items"></sup>
                                 </a>
                             </li>
+
+                            <?php if (!isset($_SESSION['email'])) : ?>
+                            <li>
+                                <a href="signup.php">Signup</a>
+                            </li>
+                            <li>
+                                <a href="signin.php">Signin</a>
+                            </li>
+                            <?php endif; ?>
+
+                            <?php if (isset($_SESSION['email'])) : ?>
+                            <li>
+                                <a href="/myproject/public/logout.php">Logout</a>
+                            </li>
+                            <?php endif; ?>
                         </ul>
                     </nav>
                     <!-- eof main nav -->

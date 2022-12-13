@@ -42,6 +42,7 @@
                     if (isset($_GET['car_ids'])) {
                         $car_ids = escape_string($_GET['car_ids'] ?? "");
 
+                        // to be worked on 
                         $query = "SELECT * FROM tbl_vehicle WHERE id='$car_ids'";
                         $result = mysqli_query($conn, $query);
 
@@ -49,7 +50,6 @@
                             $v_model = $rows['model'];
                             $v_price = $rows['price'];
                             $v_image = $rows['vehicle_image'];
-                            $desc = $rows['description'];
                     ?>
                     <div class="images" data-columns="4">
                         <div data-thumb="/myproject/resources/uploads/<?php echo $v_image ?? ""; ?>">
@@ -65,9 +65,6 @@
                         <h5 class="product_title mb-0"><?php echo $v_model; ?></h5>
                         <h6 class="product_title mb-0 mt-0"><?php echo "Toyota"; ?></h6>
                         <div class="divider-20 d-none d-lg-block"></div>
-                        <div>
-                            <?php echo substr($desc, 0, 60) . ".."; ?>
-                        </div>
                         <hr>
                         <p class="price color-main fw-500">
                             <span>
@@ -80,12 +77,15 @@
                                 <div class="single_variation_wrap">
                                     <div class="d-flex align-items-center">
                                         <div class="quantity single">
-                                            <input type="hidden" id="user_id" value="10">
+                                            <input type="hidden" id="user_id"
+                                                value="<?php echo $_SESSION['user_id'] ?? -1;  ?>">
                                         </div>
                                     </div>
-                                    <button name="make_payment" class="btn alt btn-small btn-maincolor text-dark">
-                                        <span>Pay Now!</span>
-                                    </button>
+                                    <div class="wc-proceed-to-checkout">
+                                        <a href="shop-checkout-car.php?car_ids=<?php echo  $car_ids; ?>"
+                                            class="checkout-button alt wc-forward btn btn-maincolor">Proceed
+                                            to checkout</a>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -97,45 +97,75 @@
                     <!-- description and reviews -->
                     <div class="woocommerce-tabs wc-tabs-wrapper">
                         <ul class="tabs wc-tabs" role="tablist">
+                            <li class="reviews_tab" id="tab-title-reviews" role="tab" aria-controls="tab-reviews">
+                                <a href="#tab-reviews">Reviews</a>
+                            </li>
                             <li class="description_tab" id="tab-title-description" role="tab"
                                 aria-controls="tab-description">
                                 <a href="#tab-description">Description</a>
-                            </li>
-                            <li class="reviews_tab" id="tab-title-reviews" role="tab" aria-controls="tab-reviews">
-                                <a href="#tab-reviews">Reviews</a>
                             </li>
                         </ul>
                         <div class="panel wc-tab" id="tab-description" role="tabpanel"
                             aria-labelledby="tab-title-description">
                             <p></p>
-                            <p><?php echo $desc; ?></p>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>SPACIFICATIONS</th>
+                                        <th>DESCRIPTIONS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Model</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Make</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
                         </div>
                         <div class="panel wc-tab" id="tab-reviews" role="tabpanel" aria-labelledby="tab-title-reviews">
                             <div id="reviews">
+                                <?php
+                                $query = mysqli_query($conn, "SELECT * FROM review WHERE veh_id='$car_ids'");
+
+                                $count = mysqli_num_rows($query);
+                                if ($count > 0) {
+
+                                    while ($items = fetch_assoc($query)) {
+                                        $nameLogo =  strtoupper(substr($items['fullname'], 0, 1));
+                                        $author = $items['fullname'];
+                                        $date = $items['date'];
+                                        $comment = $items['text'];
+
+                                ?>
                                 <div id="comments">
                                     <ol class="commentlist">
                                         <li class="comment even thread-even depth-1" id="li-comment-34">
                                             <div id="comment-34" class="comment_container">
-                                                <img alt="" src="images/team/comments-01.png">
+                                                <h5 class="float-left mr-3 bg-dark text-white p-1 rounded">
+                                                    <?php echo $nameLogo; ?></h5>
                                                 <div class="comment-text">
-                                                    <!-- <div class="star-rating">
-                                                        <span style="width:80%">Rated <strong class="rating">4</strong>
-                                                            out of 5</span>
-                                                    </div> -->
                                                     <p class="meta">
-                                                        <strong>James
-                                                            Koster</strong> <span>–</span>
-                                                        <time datetime="2013-06-07T11:43:13+00:00">June 7, 2013</time>
+                                                        <strong><?php echo $author; ?></strong> <span>–</span>
+                                                        <time
+                                                            datetime="2013-06-07T11:43:13+00:00"><?php echo $date; ?></time>
                                                     </p>
                                                     <div class="description">
-                                                        <p>Nice T-shirt, I got one in black. Goes with
-                                                            anything!</p>
+                                                        <p><?php echo $comment; ?></p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
                                     </ol>
                                 </div>
+                                <?php }
+                                } else {
+                                    echo "<h5> No Review Yet </h5>";
+                                } ?>
 
 
                                 <div id="review_form_wrapper">
@@ -153,18 +183,6 @@
                                                         published.</span>
                                                     Required fields are marked <span class="required">*</span>
                                                 </p>
-                                                <!-- <div class="comment-form-rating">
-                                                    <label>Your rating</label>
-                                                    <p class="stars">
-                                                        <span>
-                                                            <a class="star-1" href="#">1</a>
-                                                            <a class="star-2" href="#">2</a>
-                                                            <a class="star-3" href="#">3</a>
-                                                            <a class="star-4" href="#">4</a>
-                                                            <a class="star-5" href="#">5</a>
-                                                        </span>
-                                                    </p>
-                                                </div> -->
                                                 <p class="comment-form-comment">
                                                     <label for="comment">Your review <span class="required">*</span>
                                                     </label>
@@ -186,10 +204,12 @@
                                                         placeholder="e-mail address">
                                                 </p>
                                                 <p class="form-submit">
-                                                    <button type="submit" id="submit" name="submit"
+                                                    <input type="hidden" name="car_ids" value="<?php echo $car_ids; ?>">
+                                                    <button type="submit" id="submit" name="reviewVeh"
                                                         class="btn btn-maincolor"><span>Submit</span></button>
                                                 </p>
                                             </form>
+                                            <?php reviewVeh(); ?>
                                         </div>
                                         <!-- #respond -->
                                     </div>

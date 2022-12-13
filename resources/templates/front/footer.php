@@ -144,6 +144,7 @@
 
 <script src="js/compressed.js"></script>
 <script src="js/main.js"></script>
+<script src="js/script.js"></script>
 <!-- <script src="js/switcher.js"></script> -->
 
 <!-- Google Map Script -->

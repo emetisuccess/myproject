@@ -40,8 +40,8 @@
                 <div class="product">
                     <?php
                     if (isset($_GET['pro_id'])) {
-
                         $pro_id = escape_string($_GET['pro_id']);
+
 
                         $query = "SELECT * FROM tbl_products WHERE id='$pro_id'";
                         $result = mysqli_query($conn, $query);
@@ -50,7 +50,7 @@
                             $p_title = $rows['product_name'];
                             $p_price = $rows['product_price'];
                             $p_image = $rows['product_image'];
-                            $desc = $rows['description'];
+                            $desc = $rows['product_desc'];
                     ?>
 
                     <div class="images" data-columns="4">
@@ -111,7 +111,8 @@
                                 <div class="single_variation_wrap">
                                     <div class="d-flex align-items-center">
                                         <div class="quantity single">
-                                            <input type="hidden" id="user_id" value="10">
+                                            <input type="hidden" id="user_id"
+                                                value="<?php echo $_SESSION['user_id'] ?? -1; ?>">
                                         </div>
                                     </div>
                                     <button class="btn alt btn-small btn-maincolor text-dark addToCart"
@@ -133,47 +134,56 @@
                     <!-- description and reviews -->
                     <div class="woocommerce-tabs wc-tabs-wrapper">
                         <ul class="tabs wc-tabs" role="tablist">
+                            <li class="reviews_tab" id="tab-title-reviews" role="tab" aria-controls="tab-reviews">
+                                <a href="#tab-reviews">Reviews</a>
+                            </li>
                             <li class="description_tab" id="tab-title-description" role="tab"
                                 aria-controls="tab-description">
                                 <a href="#tab-description">Description</a>
                             </li>
-                            <li class="reviews_tab" id="tab-title-reviews" role="tab" aria-controls="tab-reviews">
-                                <a href="#tab-reviews">Reviews</a>
-                            </li>
                         </ul>
-                        <div class="panel wc-tab" id="tab-description" role="tabpanel"
-                            aria-labelledby="tab-title-description">
-                            <p></p>
-                            <?php echo $desc; ?>
-                        </div>
-
 
                         <div class="panel wc-tab" id="tab-reviews" role="tabpanel" aria-labelledby="tab-title-reviews">
                             <div id="reviews">
+
+                                <?php
+                                $query = mysqli_query($conn, "SELECT * FROM review WHERE pro_id='$pro_id'");
+
+                                $count = mysqli_num_rows($query);
+                                if ($count > 0) {
+
+
+                                    while ($items = fetch_assoc($query)) {
+                                        $nameLogo =  strtoupper(substr($items['fullname'], 0, 1));
+                                        $author = $items['fullname'];
+                                        $date = $items['date'];
+                                        $comment = $items['text'];
+
+                                ?>
                                 <div id="comments">
                                     <ol class="commentlist">
                                         <li class="comment even thread-even depth-1" id="li-comment-34">
                                             <div id="comment-34" class="comment_container">
-                                                <img alt="" src="images/team/comments-01.png">
+                                                <h5 class="float-left mr-3 bg-dark text-white p-1 rounded">
+                                                    <?php echo $nameLogo; ?></h5>
                                                 <div class="comment-text">
-                                                    <!-- <div class="star-rating">
-                                                        <span style="width:80%">Rated <strong class="rating">4</strong>
-                                                            out of 5</span>
-                                                    </div> -->
                                                     <p class="meta">
-                                                        <strong>James
-                                                            Koster</strong> <span>–</span>
-                                                        <time datetime="2013-06-07T11:43:13+00:00">June 7, 2013</time>
+                                                        <strong><?php echo $author; ?></strong> <span>–</span>
+                                                        <time
+                                                            datetime="2013-06-07T11:43:13+00:00"><?php echo $date; ?></time>
                                                     </p>
                                                     <div class="description">
-                                                        <p>Nice T-shirt, I got one in black. Goes with
-                                                            anything!</p>
+                                                        <p><?php echo $comment; ?></p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
                                     </ol>
                                 </div>
+                                <?php }
+                                } else {
+                                    echo "<h5> No Review Yet </h5>";
+                                } ?>
 
                                 <div id="review_form_wrapper">
                                     <div id="review_form">
@@ -183,6 +193,8 @@
                                                         style="display:none;">Cancel reply</a>
                                                 </small>
                                             </span>
+
+
                                             <form action="" method="post" id="commentform" class="comment-form"
                                                 novalidate="">
                                                 <p class="comment-notes">
@@ -190,18 +202,7 @@
                                                         published.</span>
                                                     Required fields are marked <span class="required">*</span>
                                                 </p>
-                                                <!-- <div class="comment-form-rating">
-                                                    <label>Your rating</label>
-                                                    <p class="stars">
-                                                        <span>
-                                                            <a class="star-1" href="#">1</a>
-                                                            <a class="star-2" href="#">2</a>
-                                                            <a class="star-3" href="#">3</a>
-                                                            <a class="star-4" href="#">4</a>
-                                                            <a class="star-5" href="#">5</a>
-                                                        </span>
-                                                    </p>
-                                                </div> -->
+
                                                 <p class="comment-form-comment">
                                                     <label for="comment">Your review <span class="required">*</span>
                                                     </label>
@@ -223,10 +224,13 @@
                                                         placeholder="e-mail address">
                                                 </p>
                                                 <p class="form-submit">
-                                                    <button type="submit" id="submit" name="submit"
+                                                    <input type="hidden" name="pro_id" value="<?php echo $pro_id; ?>">
+                                                    <button type="submit" name="review"
                                                         class="btn btn-maincolor"><span>Submit</span></button>
                                                 </p>
                                             </form>
+
+                                            <?php review(); ?>
                                         </div>
                                         <!-- #respond -->
                                     </div>
@@ -234,6 +238,11 @@
                                 <div class="clear">
                                 </div>
                             </div>
+                        </div>
+                        <div class="panel wc-tab" id="tab-description" role="tabpanel"
+                            aria-labelledby="tab-title-description">
+                            <p></p>
+                            <?php echo $desc; ?>
                         </div>
                     </div>
 

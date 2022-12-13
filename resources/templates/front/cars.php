@@ -7,7 +7,7 @@
             <div class="divider-60 d-none d-xl-block"></div>
         </div>
         <div class="row">
-            <?php getVehicles('tbl_vehicle', 'vehicle_cat_id', 4); ?>
+            <?php getVehicles('tbl_vehicle', 'vehicle_cat_id', 7); ?>
         </div>
     </div>
 </section>

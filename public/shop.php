@@ -2,7 +2,8 @@
 
 <?php require_once(TEMPLATE_FRONT . DS . "indexheader.php"); ?>
 
-<?php require(TEMPLATE_FRONT . DS . "loader.php"); ?>
+<?php //require(TEMPLATE_FRONT . DS . "loader.php"); 
+?>
 
 <?php require(TEMPLATE_FRONT . DS . "modal.php"); ?>
 
@@ -35,263 +36,104 @@
 
 <section class="ls s-pt-60 s-pb-70 s-py-lg-100 s-py-xl-150">
     <div class="container">
-        <div class="row">
-            <main class="col-lg-8 col-xl-9 order-lg-2">
+        <div class="row justify-content-center">
+            <main class="col-lg-8 col-xl-9 col-md-8 col-sm-12 order-lg-2">
                 <div class="columns-3">
                     <form class="form-inline shop-form bordered mb-30">
                         <p class="woocommerce-result-count fs-14 fw-400">
-                            <span class="color-dark fw-500 product-found fs-16">1 505
+                            <span class="color-dark fw-500 product-found fs-16">1505
                             </span>Products
                             Found
                         </p>
-                        <div class="form-group sort-form">
+                        <div class="form-group">
                             <label class="fw-500" for="orderby">Sort By</label>
-                            <select class="form-control orderby" name="orderby" id="orderby">
-                                <option value="menu_order" selected="">Name</option>
-                                <option value="popularity">Popularity</option>
+                            <select name="orderby" id="#orderby" class="form-control">
+                                <option value="menu_order">Name</option>
+                                <option value="popularity" selected>Popularity</option>
                                 <option value="rating">Rating</option>
                                 <option value="date">Newness</option>
                                 <option value="price">Low To High</option>
                                 <option value="price-desc">High To Low</option>
                             </select>
                         </div>
-                        <div class="form-group view-product">
-                            <p class="fw-500">View</p>
-                            <a href="#" id="toggle_shop_view" class=""></a>
-                        </div>
                     </form>
-                    <ul id="products" class="products list-unstyled grid-view">
-                        <li class="product vertical-item padding-small content-padding">
-                            <div class="product-inner bordered">
-                                <a class="link-scale" href="shop-product-left.php">
-                                    <img src="images/shop/01.jpg" alt="">
-                                </a>
-                                <div class="item-content">
-                                    <h2>Motor car candles</h2>
-                                    <div class="star-rating">
-                                        <span style="width:80%">Rated <strong class="rating">4.00</strong> out
-                                            of 5</span>
-                                    </div>
-                                    <span class="price">
-                                        <del>
-                                            <span>
-                                                <span class="fw-500">$ </span>70.00
-                                            </span>
-                                        </del>
-                                        <span>$ </span>55.00
-                                    </span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product vertical-item padding-small content-padding">
-                            <div class="product-inner bordered">
-                                <a class="link-scale" href="shop-product-left.php">
-                                    <img src="images/shop/05.jpg" alt="">
-                                </a>
-                                <div class="item-content">
-                                    <h2>DOZYANT 12 Feet Universal</h2>
-                                    <div class="star-rating">
-                                        <span style="width:80%">Rated <strong class="rating">4.00</strong> out
-                                            of 5</span>
-                                    </div>
-                                    <span class="price">
-                                        <del>
-                                            <span>
-                                                <span class="fw-500">$ </span>70.00
-                                            </span>
-                                        </del>
-                                        <span>$ </span>55.00
-                                    </span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product vertical-item padding-small content-padding">
-                            <div class="product-inner bordered">
-                                <a class="link-scale" href="shop-product-left.php">
-                                    <img src="images/shop/08.jpg" alt="">
-                                </a>
-                                <div class="item-content">
-                                    <h2>WarmGuard WG55F Insulated</h2>
-                                    <div class="star-rating">
-                                        <span style="width:80%">Rated <strong class="rating">4.00</strong> out
-                                            of 5</span>
-                                    </div>
-                                    <span class="price">
-                                        <del>
-                                            <span>
-                                                <span class="fw-500">$ </span>70.00
-                                            </span>
-                                        </del>
-                                        <span>$ </span>55.00
-                                    </span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product vertical-item padding-small content-padding">
-                            <div class="product-inner bordered">
-                                <a class="link-scale" href="shop-product-left.php">
-                                    <img src="images/shop/02.jpg" alt="">
-                                </a>
-                                <div class="item-content">
-                                    <h2>MTcisa 12V DC Portable Air</h2>
-                                    <div class="star-rating">
-                                        <span style="width:80%">Rated <strong class="rating">4.00</strong> out
-                                            of 5</span>
-                                    </div>
-                                    <span class="price">
-                                        <del>
-                                            <span>
-                                                <span class="fw-500">$ </span>70.00
-                                            </span>
-                                        </del>
-                                        <span>$ </span>55.00
-                                    </span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product vertical-item padding-small content-padding">
-                            <div class="product-inner bordered">
-                                <a class="link-scale" href="shop-product-left.php">
-                                    <img src="images/shop/03.jpg" alt="">
-                                </a>
-                                <div class="item-content">
-                                    <h2>Tire inflator, 20V Cordless Air </h2>
-                                    <div class="star-rating">
-                                        <span style="width:80%">Rated <strong class="rating">4.00</strong> out
-                                            of 5</span>
-                                    </div>
-                                    <span class="price">
-                                        <del>
-                                            <span>
-                                                <span class="fw-500">$ </span>70.00
-                                            </span>
-                                        </del>
-                                        <span>$ </span>55.00
-                                    </span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product vertical-item padding-small content-padding">
-                            <div class="product-inner bordered">
-                                <a class="link-scale" href="shop-product-left.php">
-                                    <img src="images/shop/04.jpg" alt="">
-                                </a>
-                                <div class="item-content">
-                                    <h2>hisWorx for TWC-01 Vacuum</h2>
-                                    <div class="star-rating">
-                                        <span style="width:80%">Rated <strong class="rating">4.00</strong> out
-                                            of 5</span>
-                                    </div>
-                                    <span class="price">
-                                        <del>
-                                            <span>
-                                                <span class="fw-500">$ </span>70.00
-                                            </span>
-                                        </del>
-                                        <span>$ </span>55.00
-                                    </span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product vertical-item padding-small content-padding">
-                            <div class="product-inner bordered">
-                                <a class="link-scale" href="shop-product-left.php">
-                                    <img src="images/shop/06.jpg" alt="">
-                                </a>
-                                <div class="item-content">
-                                    <h2>Beam Electronics Universal</h2>
-                                    <div class="star-rating">
-                                        <span style="width:80%">Rated <strong class="rating">4.00</strong> out
-                                            of 5</span>
-                                    </div>
-                                    <span class="price">
-                                        <del>
-                                            <span>
-                                                <span class="fw-500">$ </span>70.00
-                                            </span>
-                                        </del>
-                                        <span>$ </span>55.00
-                                    </span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product vertical-item padding-small content-padding">
-                            <div class="product-inner bordered">
-                                <a class="link-scale" href="shop-product-left.php">
-                                    <img src="images/shop/09.jpg" alt="">
-                                </a>
-                                <div class="item-content">
-                                    <h2>12V Tire Pump Unique</h2>
-                                    <div class="star-rating">
-                                        <span style="width:80%">Rated <strong class="rating">4.00</strong> out
-                                            of 5</span>
-                                    </div>
-                                    <span class="price">
-                                        <del>
-                                            <span>
-                                                <span class="fw-500">$ </span>70.00
-                                            </span>
-                                        </del>
-                                        <span>$ </span>55.00
-                                    </span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product vertical-item padding-small content-padding">
-                            <div class="product-inner bordered">
-                                <a class="link-scale" href="shop-product-left.php">
-                                    <img src="images/shop/07.jpg" alt="">
-                                </a>
-                                <div class="item-content">
-                                    <h2>Motor car candles </h2>
-                                    <div class="star-rating">
-                                        <span style="width:80%">Rated <strong class="rating">4.00</strong> out
-                                            of 5</span>
-                                    </div>
-                                    <span class="price">
-                                        <del>
-                                            <span>
-                                                <span class="fw-500">$ </span>70.00
-                                            </span>
-                                        </del>
-                                        <span>$ </span>55.00
-                                    </span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- columns 3 -->
 
+                    <div class="row">
+                        <?php
+                        $query = mysqli_query($conn, "SELECT * FROM tbl_products");
+                        confirm($query);
+                        $count = mysqli_num_rows($query);
+
+                        $result_per_page = 5;
+                        $number_of_pages = ceil($count / $result_per_page);
+
+                        if (!isset($_GET['page'])) {
+                            $page = 1;
+                        } else {
+                            $page = $_GET['page'];
+                        }
+
+                        $first_page_result = ($page - 1) * $result_per_page;
+
+
+                        $product_query = query("SELECT * FROM tbl_products ORDER BY id DESC LIMIT " . $first_page_result . ", " . $result_per_page . "");
+                        confirm($product_query);
+
+                        while ($items = fetch_assoc($product_query)) {
+                        ?>
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-6">
+                            <div class="card mb-3">
+                                <a class="link-scale" href="shop-product.php?pro_id=<?php echo $items['id']; ?>">
+                                    <img src="/myproject/resources/uploads/<?php echo $items['product_image']; ?>"
+                                        class='img-fluid' alt="">
+                                </a>
+                                <div class="card-body text-center">
+                                    <p class="mb-0"><?php echo $items['product_name']; ?></p>
+                                    <span class="price">
+                                        <span>&#8358;</span><?php echo $items['product_price']; ?>
+                                    </span>
+                                    <form action="" method="post" class="text-center">
+                                        <input type="hidden" id="user_id"
+                                            value="<?php echo $_SESSION['user_id'] ?? -1; ?>">
+                                        <input type="submit" value="Add to Cart" p_id="<?php echo $items['id']; ?>"
+                                            class="btn btn-warning rounded btn-sm p-2 addToCart">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+
+
+                <!-- pagination for shop page -->
+                <!-- columns 3 -->
                 <nav class="woocommerce-pagination">
-                    <ul class="page-numbers">
+                    <ul class="page-numbers pager">
+                        <?php for ($i = 1; $i <= $number_of_pages; $i++) {
+                            if ($i == $page) : ?>
                         <li>
-                            <a class="next page-numbers" href="shop-left.php">
-                                <i class="fa fa-angle-left"></i>
+                            <a href="/myproject/public/shop.php?products&page=<?php echo $i; ?>"
+                                style="background-color:#ff4e3c">
+                                <?php echo $i; ?>
                             </a>
                         </li>
+                        <?php else : ?>
                         <li>
-                            <span class="page-numbers current">1</span>
-                        </li>
-                        <li>
-                            <a class="page-numbers" href="shop-left.php">2</a>
-                        </li>
-                        <li>
-                            <a class="page-numbers dots" href="shop-left.php">...</a>
-                        </li>
-                        <li>
-                            <a class="page-numbers" href="shop-left.php">4</a>
-                        </li>
-                        <li>
-                            <a class="next page-numbers" href="shop-left.php">
-                                <i class="fa fa-angle-right"></i>
+                            <a href="/myproject/public/shop.php?products&page=<?php echo $i; ?>">
+                                <?php echo $i; ?>
                             </a>
                         </li>
+                        <?php
+                            endif;
+                        }
+                        ?>
                     </ul>
                 </nav>
-
-
             </main>
+
             <aside class="col-lg-4 col-xl-3 order-lg-1">
                 <div class="widget woocommerce widget_product_categories">
                     <h5 class="widget-title">Categories</h5>
@@ -343,19 +185,18 @@
                 <div class="widget woocommerce widget_recently_viewed_products">
                     <h5 class="widget-title">Viewed Products</h5>
                     <ul class="product_list_widget">
-
                         <li>
                             <a href="shop-product-right.php">
                                 <img src="images/shop/05.jpg" alt="">
                                 <span class="product-title">Propane Regulator</span>
                             </a>
                             <div class="d-flex justify-content-between rating-product">
-                                <div class="star-rating">
+                                <!-- <div class="star-rating">
                                     <span style="width:80%">Rated
                                         <strong class="rating">5.00 </strong>
                                         out of 5
                                     </span>
-                                </div>
+                                </div> -->
                                 <a href="#" class="remove" aria-label="Remove this item" data-product_id="73"
                                     data-product_sku=""><i class="fs-14 ico-trash color-main"></i></a>
                             </div>
@@ -363,92 +204,9 @@
                                 <span class="woocommerce-Price-currencySymbol">$</span>55.00
                             </span>
                         </li>
-
-                        <li>
-                            <a href="shop-product-right.php">
-                                <img src="images/shop/08.jpg" alt="">
-                                <span class="product-title">Motor car candles</span>
-                            </a>
-                            <div class="d-flex justify-content-between rating-product">
-                                <div class="star-rating">
-                                    <span style="width:80%">Rated
-                                        <strong class="rating">5.00 </strong>
-                                        out of 5
-                                    </span>
-                                </div>
-                                <a href="#" class="remove" aria-label="Remove this item" data-product_id="73"
-                                    data-product_sku=""><i class="fs-14 ico-trash color-main"></i></a>
-                            </div>
-                            <del>
-                                <span class="woocommerce-Price-amount amount">
-                                    <span class="woocommerce-Price-currencySymbol">$</span>
-                                    70.00
-                                </span>
-                            </del>
-                            <span class="woocommerce-Price-amount amount">
-                                <span class="woocommerce-Price-currencySymbol">$</span>
-                                55.00
-                            </span>
-                        </li>
-
-                        <li>
-                            <a href="shop-product-right.php">
-                                <img src="images/shop/01.jpg" alt="">
-                                <span class="product-title">Oil filter car</span>
-                            </a>
-                            <div class="d-flex justify-content-between rating-product">
-                                <div class="star-rating">
-                                    <span style="width:80%">Rated
-                                        <strong class="rating">5.00 </strong>
-                                        out of 5
-                                    </span>
-                                </div>
-                                <a href="#" class="remove" aria-label="Remove this item" data-product_id="73"
-                                    data-product_sku=""><i class="fs-14 ico-trash color-main"></i></a>
-                            </div>
-                            <del>
-                                <span class="woocommerce-Price-amount amount">
-                                    <span class="woocommerce-Price-currencySymbol">$</span>
-                                    70.00
-                                </span>
-                            </del>
-                            <span class="woocommerce-Price-amount amount">
-                                <span class="woocommerce-Price-currencySymbol">$</span>
-                                55.00
-                            </span>
-                        </li>
                     </ul>
                 </div>
 
-
-                <div class="widget woocommerce widget_price_filter">
-                    <h5 class="widget-title">Price Filter</h5>
-                    <form method="get" action="">
-                        <div class="price_slider_wrapper">
-                            <div
-                                class="price_slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
-                                <span class="from">$20.00</span>
-                                <div class="ui-slider-range ui-widget-header ui-corner-all"
-                                    style="left: 14%; width: 65%;">
-                                </div>
-                                <span class="to">$700.00</span>
-                                <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"
-                                    style="left: 12%;">
-                                </span>
-                                <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"
-                                    style="left: 80%;">
-                                </span>
-                            </div>
-                            <div class="price_slider_amount">
-                                <input type="text" id="min_price" name="min_price" value="" data-min="20"
-                                    placeholder="Min price" style="display: none;">
-                                <input type="text" id="max_price" name="max_price" value="" data-max="30"
-                                    placeholder="Max price" style="display: none;">
-                                <div class="clear"></div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
             </aside>
         </div>
     </div>
