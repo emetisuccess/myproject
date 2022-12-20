@@ -1,6 +1,6 @@
 <div class="brand clearfix p-1">
     <span style="font-size: 20px; float: left; margin-top:1rem;">
-        <a href="index.php">Vehicle Services | Admin Panel</a>
+        <a href="../index.php">Vehicle Services | Admin Panel</a>
     </span>
     <span class="menu-btn"><i class="fa fa-bars"></i></span>
     <ul class="ts-profile-nav">

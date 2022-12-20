@@ -21,9 +21,6 @@
                     <li class="breadcrumb-item">
                         <a href="index.php">Home</a>
                     </li>
-                    <li class="breadcrumb-item">
-                        <a href="#">Shop</a>
-                    </li>
                     <li class="breadcrumb-item active">
                         Shopping Cart
                     </li>
@@ -178,30 +175,36 @@
                         <div class="divider-55 d-none d-lg-block"></div>
 
                         <ul class="products">
+                            <?php
+                                $query =  mysqli_query($conn, "SELECT * FROM tbl_products WHERE trending_product='1'");
+                                while ($items = fetch_assoc($query)) {
+                                ?>
                             <li class="product vertical-item padding-small content-padding">
                                 <div class="product-inner bordered">
-                                    <a class="link-scale" href="shop-product.php">
-                                        <img src="images/shop/01.jpg" alt="">
+                                    <a class="link-scale"
+                                        href="shop-product.php?pro_id=<?php echo $items['id'] ?? 1; ?>">
+                                        <img src="/myproject/resources/uploads/<?php echo $items['product_image'] ?? ""; ?>"
+                                            alt="Product Image">
                                     </a>
-                                    <div class="item-content">
-                                        <h2>Motor car candles</h2>
-                                        <div class="star-rating">
-                                            <span style="width:80%">Rated <strong class="rating">4.00</strong> out of
-                                                5</span>
-                                        </div>
-                                        <span class="price">
-                                            <del>
-                                                <span>
-                                                    <span class="fw-500">$ </span>70.00
-                                                </span>
-                                            </del>
-                                            <span>$ </span>55.00
+                                    <div class="my-3">
+                                        <h6 class="my-0"><?php echo $items['product_name'] ?? ""; ?></h6>
+                                        <span class="text-warning my-0">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
                                         </span>
+                                        <div>
+                                            <span>$</span><?php echo $items['product_price'] ?? ""; ?>
+                                        </div>
                                     </div>
                                 </div>
                             </li>
+                            <?php } ?>
                         </ul>
                     </div>
+
                 </div>
             </main>
         </div>

@@ -41,6 +41,7 @@ if (isset($_GET['status'])) {
                 $customer_email = escape_string($res->data->customer->email);
                 $order_currency_type = escape_string($res->data->currency);
                 $customer_id = escape_string($res->data->meta->consumer_id);
+                $product_id = escape_string($res->data->meta->product_id);
 
                 $query_user = query("SELECT * FROM users WHERE user_id='$customer_id'");
                 confirm($query_user);
@@ -60,12 +61,10 @@ if (isset($_GET['status'])) {
                     confirm($insert_orders);
 
                     $last_id = mysqli_insert_id($conn);
-
                     $user_id = escape_string($_SESSION['user_id']);
 
-
                     // to be modified
-                    $query = "SELECT * FROM tbl_vehicle WHERE user_id='$user_id'";
+                    $query = "SELECT * FROM tbl_vehicle WHERE id='$product_id'";
                     $res = mysqli_query($conn, $query);
                     confirm($res);
                     while ($row = fetch_assoc($res)) {
@@ -77,18 +76,9 @@ if (isset($_GET['status'])) {
 
 
                         // insert into report table
-                        $insert_report = query("INSERT INTO reports (order_id, product_image, product_title, product_price, product_quantity) VALUES('$last_id', '$product_image', '$product_title', '$amountToPay','$qty')");
+                        $insert_report = query("INSERT INTO reports (order_id, product_image, product_title, product_price, product_quantity) VALUES('$last_id', '$product_image', '$product_title', '$amountToPay', 1)");
                         confirm($insert_report);
-
-                        // update product table for current product quatity;
-                        $query = query("UPDATE tbl_products SET product_qty='$updated_quantity' WHERE id='$cart_pro_id'");
-
-
-                        // delete items from cart after the purchase
-                        $cart_query = query("DELETE FROM cart WHERE user_id='{$user_id}' AND p_id='{$product_id}'");
                     }
-
-                    // //////////////////////
                 } else {
                     set_message("<span class='alert alert-danger'>Fraud Transaction Detected</span>");
                     redirect("cart.php");

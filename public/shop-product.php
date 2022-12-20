@@ -2,7 +2,8 @@
 
 <?php require_once(TEMPLATE_FRONT . DS . "indexheader.php"); ?>
 
-<?php require(TEMPLATE_FRONT . DS . "loader.php"); ?>
+<?php //require(TEMPLATE_FRONT . DS . "loader.php"); 
+?>
 
 <?php require(TEMPLATE_FRONT . DS . "modal.php"); ?>
 
@@ -75,11 +76,18 @@
                         </div> -->
                         <div class="divider-20 d-none d-lg-block"></div>
                         <div>
-                            <ul class="list3">
+                            <ul class="list3 my-0">
                                 <?php echo substr($desc, 0, 60) . ".."; ?>
                             </ul>
+                            <span class="text-warning my-0">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </span>
                         </div>
-                        <hr>
+                        <hr class="my-1">
                         <p class="price color-main fw-500">
                             <span>
                                 <h5 class="mt-0 mb-0"> Price:&nbsp;<span class="">&#8358;</span><?php echo $p_price; ?>
@@ -118,9 +126,6 @@
                                     <button class="btn alt btn-small btn-maincolor text-dark addToCart"
                                         p_id="<?php echo $pro_id; ?>">
                                         <span>Add to Cart</span>
-                                    </button>
-                                    <button name="make_payment" class="btn alt btn-small btn-maincolor text-dark">
-                                        <span>Pay Now!</span>
                                     </button>
                                 </div>
                             </form>
@@ -245,116 +250,9 @@
                             <?php echo $desc; ?>
                         </div>
                     </div>
-
-
-                    <section class="up-sells upsells products">
-                        <div class="col-12 mb-60">
-                            <h3 class="special-heading text-center">Best<span class="text-gradient">Sellers</span></h3>
-                            <p class="fs-20 color-dark">The Car Repair Spareparts</p>
-                        </div>
-                        <ul class="products">
-                            <li class="product vertical-item padding-small content-padding">
-                                <div class="product-inner bordered">
-                                    <a class="link-scale" href="shop-product.php">
-                                        <img src="images/shop/01.jpg" alt="">
-                                    </a>
-                                    <div class="item-content">
-                                        <h2>Motor car candles</h2>
-                                        <div class="star-rating">
-                                            <span style="width:80%">Rated <strong class="rating">4.00</strong> out of
-                                                5</span>
-                                        </div>
-                                        <span class="price">
-                                            <del>
-                                                <span>
-                                                    <span class="fw-500">&#8358; </span>70.00
-                                                </span>
-                                            </del>
-                                            <span>&#8358; </span>55.00
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </section>
-
                 </div>
-                <!-- #product-22 -->
             </main>
-
-            <aside class="col-lg-5 col-xl-3 order-lg-1">
-                <div class="widget woocommerce widget_product_categories">
-                    <h5 class="widget-title">Categories</h5>
-                    <ul class="product-categories">
-                        <li class="cat-item">
-                            <a href="shop.php" class="active">Car Towing</a>
-                        </li>
-                        <li class="cat-item">
-                            <a href="shop.php">Flood Insurance Coverage</a>
-                        </li>
-                        <li class="cat-item">
-                            <a href="shop.php">Hail Damage</a>
-                        </li>
-                        <li class="cat-item cat-parent">
-                            <a href="shop.php">Accident Insurance</a>
-                        </li>
-                        <li class="cat-item">
-                            <a href="shop.php">Fire Insurance</a>
-                        </li>
-                        <li class="cat-item cat-parent">
-                            <a href="shop.php">Motorcycle Towing</a>
-                        </li>
-                        <li class="cat-item">
-                            <a href="shop.php">Break repair</a>
-                        </li>
-                        <li class="cat-item cat-parent">
-                            <a href="shop.php">Ingnition test</a>
-                        </li>
-                    </ul>
-                </div>
-
-
-                <!-- <div class="widget woocommerce widget_product_categories">
-                    <h5 class="widget-title">Categories Dropdown</h5>
-                    <select name="product_cat" class="dropdown_product_cat">
-                        <option value="" selected="selected">Select a category</option>
-                        <option class="level-0" value="cartowing">CarTowing</option>
-                        <option class="level-1" value="hail-damage">Hail Damage</option>
-                        <option class="level-1" value="flood-insurance-coverage">Flood Insurance Coverage</option>
-                        <option class="level-0" value="accident-insurance">Accident Insurance</option>
-                        <option class="level-1" value="fire-insurance">Fire Insurance</option>
-                        <option class="level-1" value="motorcycle-towing">Motorcycle Towing</option>
-                        <option class="level-0" value="break-repair">Break repair</option>
-                        <option class="level-1" value="ingnition-test">Ingnition test</option>
-                    </select>
-                </div> -->
-
-
-                <div class="widget woocommerce widget_recently_viewed_products">
-                    <h5 class="widget-title">Viewed Products</h5>
-                    <ul class="product_list_widget">
-                        <li>
-                            <a href="shop-product-right.php">
-                                <img src="images/shop/05.jpg" alt="">
-                                <span class="product-title">Propane Regulator</span>
-                            </a>
-                            <div class="d-flex justify-content-between rating-product">
-                                <div class="star-rating">
-                                    <span style="width:80%">Rated
-                                        <strong class="rating">5.00 </strong>
-                                        out of 5
-                                    </span>
-                                </div>
-                                <a href="#" class="remove" aria-label="Remove this item" data-product_id="73"
-                                    data-product_sku=""><i class="fs-14 ico-trash color-main"></i></a>
-                            </div>
-                            <span class="woocommerce-Price-amount amount">
-                                <span class="woocommerce-Price-currencySymbol">$</span>55.00
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-            </aside>
+            <?php require(TEMPLATE_FRONT . DS . "viewedpro.php"); ?>
         </div>
     </div>
 </section>

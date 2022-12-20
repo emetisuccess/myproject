@@ -2,7 +2,6 @@ $(document).ready(function() {
     cart_count();
 
     function cart_count() {
-
         $.ajax({
             url: "/myproject/resources/checkout.php",
             method: "POST",
@@ -35,6 +34,27 @@ $(document).ready(function() {
             }
         })
     })
+
+    $("#view").click(function(e) {
+        e.preventDefault();
+        console.log("clicked");
+        // let orderby = $("#orderby").val();
+        // $.ajax({
+        //     url: "/myproject/resources/functions.php",
+        //     method: "POST",
+        //     data: {
+        //         sorts: 1,
+        //         orderby: orderby,
+        //     },
+        //     success: function(data) {
+        //         console.log(data);
+        //     }
+        // })
+    })
+
+
+
+
 
 
     // $("select").hover(function() {
