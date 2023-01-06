@@ -43,6 +43,31 @@ if (isset($_GET['del'])) {
     redirect("/myproject/public/cart.php");
 }
 
+
+// if (isset($_GET['viewed'])) {
+
+//     if(isset($_SESSION['user_id'])){
+//         $pro_id = $_GET['viewed'];
+//         $query = "DELETE FROM viewed_product WHERE pro_id=? AND user_id=?";
+//         $stmt = $conn->prepare($query);
+//         $stmt->bind_param("ii", $pro_id, $user_id);
+//     }else{
+//         $pro_id = $_GET['viewed'];
+//         $user_id = -1;
+//         $query = "DELETE FROM viewed_product WHERE pro_id=? AND user_id=?";
+//         $stmt = $conn->prepare($query);
+//         $stmt->bind_param("ii", $pro_id, $user_id);
+//     }
+//     $stmt->execute();
+
+//     if (!$stmt) {
+//         echo "failed to delete item from cart";
+//     }
+   
+// }
+
+
+
 // cart count
 if (isset($_POST['cart_count'])) {
     global $conn;
@@ -103,7 +128,7 @@ if (isset($_POST['checkout_place_order'])) {
     }
 
 
-    if (!$customer_firstname or !$customer_lastname or !$customer_address or !$customer_city or !$customer_state         or !$customer_country or !$customer_postcode or !$customer_phone) {
+    if (!$customer_firstname or !$customer_lastname or !$customer_address or !$customer_city or !$customer_state or !$customer_country or !$customer_postcode or !$customer_phone) {
         echo "All fields are Required";
         redirect("shop-checkout.php");
         die();
@@ -141,7 +166,9 @@ if (isset($_POST['checkout_place_order'])) {
     // call the flutterwave endpoint;
     $curl = curl_init();
 
-    curl_setopt_array($curl, array(
+    curl_setopt_array(
+        $curl,
+        array(
         CURLOPT_URL => "https://api.flutterwave.com/v3/payments",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
@@ -152,10 +179,11 @@ if (isset($_POST['checkout_place_order'])) {
         CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_POSTFIELDS => json_encode($request),
         CURLOPT_HTTPHEADER => array(
-            "Authorization: Bearer FLWSECK_TEST-3715e4c0f5f7bbfecfa631d6ff6f7667-X",
-            "Content-Type:application/json"
+                "Authorization: Bearer FLWSECK_TEST-3715e4c0f5f7bbfecfa631d6ff6f7667-X",
+                "Content-Type:application/json"
+            )
         )
-    ));
+    );
 
     $response = curl_exec($curl);
 
@@ -234,7 +262,9 @@ if (isset($_POST['check_out_place_car_order'])) {
     // call the flutterwave endpoint;
     $curl = curl_init();
 
-    curl_setopt_array($curl, array(
+    curl_setopt_array(
+        $curl,
+        array(
         CURLOPT_URL => "https://api.flutterwave.com/v3/payments",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
@@ -245,10 +275,11 @@ if (isset($_POST['check_out_place_car_order'])) {
         CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_POSTFIELDS => json_encode($request),
         CURLOPT_HTTPHEADER => array(
-            "Authorization: Bearer FLWSECK_TEST-3715e4c0f5f7bbfecfa631d6ff6f7667-X",
-            "Content-Type:application/json"
+                "Authorization: Bearer FLWSECK_TEST-3715e4c0f5f7bbfecfa631d6ff6f7667-X",
+                "Content-Type:application/json"
+            )
         )
-    ));
+    );
 
     $response = curl_exec($curl);
 
