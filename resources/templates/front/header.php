@@ -27,7 +27,7 @@
                                 <ul>
                                     <h5 class="text-white">Coming Soon</h5>
                                     <li>
-                                        <a href="#">Towing</a>
+                                        <a href="towing.php">Towing</a>
                                     </li>
                                     <li>
                                         <a href="#">Car Lease/Hire</a>

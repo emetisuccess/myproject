@@ -86,15 +86,15 @@ function getVehicles($table, $column, $num)
 
     while ($rows = fetch_assoc($query)) {
         $vehicle_id = $rows['id'];
-        $model = $rows["model"];
+        $model = substr($rows["model"], 0, 15) . "..";
         $price = $rows["price"];
         $image = $rows["vehicle_image"];
 
         $vehicle = <<<DELIMETER
-            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6">
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-6">
                 <div class="card mb-2">
                     <a class="link-scale"
-                        href="shop-car.php?car_ids={$vehicle_id}">
+                        href="shop-car.php?car_ids={$vehicle_id}" id='viewCar' view={$vehicle_id}>
                         <img src="/myproject/resources/uploads/{$image}" width="400px" alt="" style='height:200px'>
                     </a>
                     <div class="card-body">
@@ -128,7 +128,7 @@ function getProducts($table, $column, $num)
         $products = <<<DELIMETER
             <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6">
                 <div class="card mb-3">
-                <a class="link-scale"
+                    <a class="link-scale"
                         href="shop-product.php?pro_id={$product_id}">
                         <img src="/myproject/resources/uploads/{$image}" class='img-fluid' alt="">
                     </a>
@@ -137,8 +137,17 @@ function getProducts($table, $column, $num)
                             <span class="price">
                                 <span>&#8358;</span>{$product_price}
                             </span>
+                            <div>
+                                <i class='fa fa-star text-warning'></i>                            
+                                <i class='fa fa-star text-warning'></i>                            
+                                <i class='fa fa-star text-warning'></i>                            
+                                <i class='fa fa-star text-warning'></i>                            
+                                <i class='fa fa-star text-warning'></i>                            
+                           
+                            </div>
                         <form action="" method="post" style="margin: 0px;">
                             <input type="hidden" id="user_id" value="{$user_id}">
+                            <input type="hidden" id="view" view="{$product_id}">
                             <input type="submit" value="Add to Cart" p_id="{$product_id}" class="btn btn-warning btn-sm addToCart">
                         </form>
                     </div>
@@ -345,8 +354,8 @@ function user_signup()
                         $query->execute();
 
                         if (!$query) {
-                            die("QUERY FAILED" . mysqli_error($conn));
                             redirect("signup.php");
+                            die("QUERY FAILED" . mysqli_error($conn));
                         } else {
                             set_message("<span class='alert alert-warning text-white px-4 py-1 m-0' style='background-color:#ff4e3c;
                             border-radius:48px;'> User Registered Successfully </span>");
