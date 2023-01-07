@@ -6,7 +6,7 @@
             <p class="fs-20 color-dark">Available Cars</p>
             <div class="divider-60 d-none d-xl-block"></div>
         </div>
-        <div class="row ">
+        <div class="row">
             <?php getVehicles('tbl_vehicle', 'vehicle_cat_id', 7); ?>
         </div>
     </div>
