@@ -21,6 +21,9 @@
                     <li class="breadcrumb-item">
                         <a href="index.php">Home</a>
                     </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Shop</a>
+                    </li>
                     <li class="breadcrumb-item active">
                         Shopping Cart
                     </li>
@@ -66,18 +69,18 @@
                         </thead>
                         <tbody>
                             <?php
-                    while ($row = fetch_assoc($query)) {
+                                while ($row = fetch_assoc($query)) {
 
-                        $product_id = $row['id'];
-                        $product_name = $row['product_name'];
-                        $product_image = $row['product_image'];
-                        $product_price = $row['product_price'];
-                        $cart_qty = $row['qty'];
+                                    $product_id = $row['id'];
+                                    $product_name = $row['product_name'];
+                                    $product_image = $row['product_image'];
+                                    $product_price = $row['product_price'];
+                                    $cart_qty = $row['qty'];
 
-                        $subtotal = $cart_qty * $product_price;
-                        $total = $total + $subtotal;
-                        $item_quantity += $row['qty'];
-                            ?>
+                                    $subtotal = $cart_qty * $product_price;
+                                    $total  = $total + $subtotal;
+                                    $item_quantity += $row['qty'];
+                                ?>
                             <tr class="cart_item">
                                 <td class="product-remove">
                                     <a href="/myproject/public/cart.php?del=<?php echo $product_id; ?>" class="remove"
@@ -91,14 +94,12 @@
                                     </a>
                                 </td>
                                 <td class="product-name" data-title="<?php echo $product_name; ?>">
-                                    <a href="shop-product.php?pro_id=<?php echo $product_id; ?>">
-                                        <?php echo $product_name; ?>
-                                    </a>
+                                    <a
+                                        href="shop-product.php?pro_id=<?php echo $product_id; ?>"><?php echo $product_name; ?></a>
                                 </td>
                                 <td class="product-price" data-title="<?php echo $product_price; ?>">
                                     <span class="amount">
-                                        <span>&#8358;</span>
-                                        <?php echo $product_price; ?>
+                                        <span>&#8358;</span><?php echo  $product_price; ?>
                                     </span>
                                 </td>
                                 <td class="product-quantity product" data-title="Quantity">
@@ -112,18 +113,17 @@
                                 </td>
                                 <td class="product-subtotal" data-title="Total">
                                     <span class="amount">
-                                        <span>&#8358;</span>
-                                        <?php echo $subtotal; ?>
+                                        <span>&#8358;</span><?php echo $subtotal; ?>
                                     </span>
                                 </td>
                             </tr>
                             <?php }
-                } else {
-                    echo "<div class='text-center mt-0'>
+                            } else {
+                                echo "<div class='text-center mt-0'>
                                     <img src='images/empty-cart.png' alt='image product' width='400px' height='500px'>
                                     <h5 class='mt-0 mb-5'>Your Cart is Empty!!</h5>
                                     </div>";
-                }
+                            }
                             ?>
                             <?php if ($count > 0) { ?>
                             <tr>
@@ -148,8 +148,7 @@
                                     <th>Subtotal</th>
                                     <td data-title="Subtotal">
                                         <span class="amount">
-                                            <span>&#8358;</span>
-                                            <?php echo isset($total) ? $total : 0.00; ?>
+                                            <span>&#8358;</span><?php echo isset($total) ? $total : 0.00; ?>
                                         </span>
                                     </td>
                                 </tr>
@@ -158,8 +157,7 @@
                                     <td data-title="Total">
                                         <strong>
                                             <span class="amount">
-                                                <span>&#8358;</span>
-                                                <?php echo isset($total) ? $total : 0.00; ?>
+                                                <span>&#8358;</span><?php echo isset($total) ? $total : 0.00; ?>
                                             </span>
                                         </strong>
                                     </td>
@@ -173,7 +171,37 @@
                         </div>
                     </div>
                     <?php } ?>
-                    <?php require(TEMPLATE_FRONT . DS . "bestselling.php"); ?>
+
+                    <div class="cross-sells mt-5">
+                        <h3 class="special-heading text-center">Best<span class="text-gradient">Sellers</span></h3>
+                        <p class="fs-20 color-dark">The Car Repair Appointment</p>
+                        <div class="divider-55 d-none d-lg-block"></div>
+
+                        <ul class="products">
+                            <li class="product vertical-item padding-small content-padding">
+                                <div class="product-inner bordered">
+                                    <a class="link-scale" href="shop-product.php">
+                                        <img src="images/shop/01.jpg" alt="">
+                                    </a>
+                                    <div class="item-content">
+                                        <h2>Motor car candles</h2>
+                                        <div class="star-rating">
+                                            <span style="width:80%">Rated <strong class="rating">4.00</strong> out of
+                                                5</span>
+                                        </div>
+                                        <span class="price">
+                                            <del>
+                                                <span>
+                                                    <span class="fw-500">$ </span>70.00
+                                                </span>
+                                            </del>
+                                            <span>$ </span>55.00
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </main>
         </div>

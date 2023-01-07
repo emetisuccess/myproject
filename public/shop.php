@@ -2,7 +2,8 @@
 
 <?php require_once(TEMPLATE_FRONT . DS . "indexheader.php"); ?>
 
-<?php require(TEMPLATE_FRONT . DS . "loader.php"); ?>
+<?php //require(TEMPLATE_FRONT . DS . "loader.php"); 
+?>
 
 <?php require(TEMPLATE_FRONT . DS . "modal.php"); ?>
 
@@ -57,7 +58,7 @@
                         </div>
                     </form>
 
-                    <div class="row mx-2">
+                    <div class="row">
                         <?php
                         $query = mysqli_query($conn, "SELECT * FROM tbl_products");
                         confirm($query);
@@ -73,6 +74,7 @@
                         }
 
                         $first_page_result = ($page - 1) * $result_per_page;
+
 
                         $product_query = query("SELECT * FROM tbl_products ORDER BY id DESC LIMIT " . $first_page_result . ", " . $result_per_page . "");
                         confirm($product_query);
@@ -90,14 +92,6 @@
                                     <span class="price">
                                         <span>&#8358;</span><?php echo $items['product_price']; ?>
                                     </span>
-                                    <br>
-                                    <span class="text-warning my-0">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </span>
                                     <form action="" method="post" class="text-center">
                                         <input type="hidden" id="user_id"
                                             value="<?php echo $_SESSION['user_id'] ?? -1; ?>">
@@ -112,7 +106,10 @@
                         ?>
                     </div>
                 </div>
+
+
                 <!-- pagination for shop page -->
+                <!-- columns 3 -->
                 <nav class="woocommerce-pagination">
                     <ul class="page-numbers pager">
                         <?php for ($i = 1; $i <= $number_of_pages; $i++) {
@@ -135,9 +132,82 @@
                         ?>
                     </ul>
                 </nav>
-                <?php require(TEMPLATE_FRONT . DS . "bestselling.php"); ?>
             </main>
-            <?php require(TEMPLATE_FRONT . DS . "viewedpro.php"); ?>
+
+            <aside class="col-lg-4 col-xl-3 order-lg-1">
+                <div class="widget woocommerce widget_product_categories">
+                    <h5 class="widget-title">Categories</h5>
+                    <ul class="product-categories">
+                        <li class="cat-item cat-parent">
+                            <a href="shop.php">Car Towing</a>
+                        </li>
+                        <li class="cat-item">
+                            <a href="shop.php">Hail Damage</a>
+                        </li>
+                        <li class="cat-item">
+                            <a href="shop.php">Flood Insurance Coverage</a>
+                        </li>
+                        <li class="cat-item cat-parent">
+                            <a href="shop.php">Accident Insurance</a>
+                        </li>
+                        <li class="cat-item">
+                            <a href="shop.php">Fire Insurance</a>
+                        </li>
+                        <li class="cat-item cat-parent">
+                            <a href="shop.php">Motorcycle Towing</a>
+                        </li>
+                        <li class="cat-item">
+                            <a href="shop.php">Break repair</a>
+                        </li>
+                        <li class="cat-item cat-parent">
+                            <a href="shop.php">Ingnition test</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- <div class="widget woocommerce widget_product_categories">
+                    <h5 class="widget-title">Categories Dropdown</h5>
+                    <select name="product_cat" class="dropdown_product_cat">
+                        <option value="" selected="selected">Select a category</option>
+                        <option class="level-0" value="cartowing">Car Towing</option>
+                        <option class="level-1" value="hail-damage">Hail Damage</option>
+                        <option class="level-1" value="flood-insurance-coverage">Flood Insurance
+                            Coverage</option>
+                        <option class="level-0" value="accident-insurance">Accident Insurance
+                        </option>
+                        <option class="level-1" value="fire-insurance">Fire Insurance</option>
+                        <option class="level-1" value="motorcycle-towing">Motorcycle Towing</option>
+                        <option class="level-0" value="break-repair">Break repair</option>
+                        <option class="level-1" value="ingnition-test">Ingnition test</option>
+                    </select>
+                </div> -->
+
+                <div class="widget woocommerce widget_recently_viewed_products">
+                    <h5 class="widget-title">Viewed Products</h5>
+                    <ul class="product_list_widget">
+                        <li>
+                            <a href="shop-product-right.php">
+                                <img src="images/shop/05.jpg" alt="">
+                                <span class="product-title">Propane Regulator</span>
+                            </a>
+                            <div class="d-flex justify-content-between rating-product">
+                                <!-- <div class="star-rating">
+                                    <span style="width:80%">Rated
+                                        <strong class="rating">5.00 </strong>
+                                        out of 5
+                                    </span>
+                                </div> -->
+                                <a href="#" class="remove" aria-label="Remove this item" data-product_id="73"
+                                    data-product_sku=""><i class="fs-14 ico-trash color-main"></i></a>
+                            </div>
+                            <span class="woocommerce-Price-amount amount">
+                                <span class="woocommerce-Price-currencySymbol">$</span>55.00
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+            </aside>
         </div>
     </div>
 </section>

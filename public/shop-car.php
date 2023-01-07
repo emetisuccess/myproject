@@ -43,24 +43,13 @@
                         $car_ids = escape_string($_GET['car_ids'] ?? "");
 
                         // to be worked on 
-                        $query = "SELECT a.model, a.make, a.price, a.vehicle_image, a.engine_type, a.fuel_type, a.vehicle_mileage, a.fuel_economy, a.payload_capacity, a.engine_power, a.torque, a.vin, a.year_manufacture, b.brand_name FROM tbl_vehicle AS a INNER JOIN brands AS b ON b.brand_id=a.vehicle_brand_id INNER JOIN categories AS c ON c.cat_id=a.vehicle_cat_id WHERE a.id='$car_ids'";
+                        $query = "SELECT * FROM tbl_vehicle WHERE id='$car_ids'";
                         $result = mysqli_query($conn, $query);
 
                         while ($rows = mysqli_fetch_array($result)) {
                             $v_model = $rows['model'];
-                            $make = $rows['make'];
                             $v_price = $rows['price'];
                             $v_image = $rows['vehicle_image'];
-                            $engine_type = $rows['engine_type'];
-                            $fuel_type = $rows['fuel_type'];
-                            $fuel_economy = $rows['fuel_economy'];
-                            $vehicle_mileage = $rows['vehicle_mileage'];
-                            $payload_capacity = $rows['payload_capacity'];
-                            $engine_power = $rows['engine_power'];
-                            $torque = $rows['torque'];
-                            $vin = $rows['vin'];
-                            $year_manufacture = $rows['year_manufacture'];
-                            $brand_name = $rows['brand_name'];
                     ?>
                     <div class="images" data-columns="4">
                         <div data-thumb="/myproject/resources/uploads/<?php echo $v_image ?? ""; ?>">
@@ -74,7 +63,7 @@
                     </div>
                     <div class="summary entry-summary text-center text-md-left">
                         <h5 class="product_title mb-0"><?php echo $v_model; ?></h5>
-                        <h6 class="product_title mb-0 mt-0"><?php echo  $brand_name; ?></h6>
+                        <h6 class="product_title mb-0 mt-0"><?php echo "Toyota"; ?></h6>
                         <div class="divider-20 d-none d-lg-block"></div>
                         <hr>
                         <p class="price color-main fw-500">
@@ -128,48 +117,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th>Model</th>
-                                        <td><?php echo $v_model; ?></td>
+                                        <td>Model</td>
+
                                     </tr>
                                     <tr>
-                                        <th>Make</th>
-                                        <td><?php echo $make; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Engine Type</th>
-                                        <td><?php echo $engine_type; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Fuel Type</th>
-                                        <td><?php echo $fuel_type; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Odometer</th>
-                                        <td><?php echo $vehicle_mileage; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Fuel Economy</th>
-                                        <td><?php echo $fuel_economy; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Payload Capacity</th>
-                                        <td><?php echo $payload_capacity; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Engine Power</th>
-                                        <td><?php echo $engine_power; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Torque</th>
-                                        <td><?php echo $torque; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>VIN</th>
-                                        <td><?php echo $vin; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Year Manufactured</th>
-                                        <td><?php echo $year_manufacture; ?></td>
+                                        <td>Make</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -256,7 +208,6 @@
                                                     <button type="submit" id="submit" name="reviewVeh"
                                                         class="btn btn-maincolor"><span>Submit</span></button>
                                                 </p>
-
                                             </form>
                                             <?php reviewVeh(); ?>
                                         </div>
@@ -268,10 +219,116 @@
                             </div>
                         </div>
                     </div>
-                    <?php require(TEMPLATE_FRONT . DS . "bestselling.php"); ?>
+
+
+                    <section class="up-sells upsells products">
+                        <div class="col-12 mb-60">
+                            <h3 class="special-heading text-center">Best<span class="text-gradient">Sellers</span></h3>
+                            <p class="fs-20 color-dark">The Car Repair Spareparts</p>
+                        </div>
+                        <ul class="products">
+                            <li class="product vertical-item padding-small content-padding">
+                                <div class="product-inner bordered">
+                                    <a class="link-scale" href="shop-product.php">
+                                        <img src="images/shop/01.jpg" alt="">
+                                    </a>
+                                    <div class="item-content">
+                                        <h2>Motor car candles</h2>
+                                        <div class="star-rating">
+                                            <span style="width:80%">Rated <strong class="rating">4.00</strong> out of
+                                                5</span>
+                                        </div>
+                                        <span class="price">
+                                            <del>
+                                                <span>
+                                                    <span class="fw-500">&#8358; </span>70.00
+                                                </span>
+                                            </del>
+                                            <span>&#8358; </span>55.00
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+
                 </div>
+                <!-- #product-22 -->
             </main>
-            <?php require(TEMPLATE_FRONT . DS . "viewedpro.php"); ?>
+
+            <aside class="col-lg-5 col-xl-3 order-lg-1">
+                <div class="widget woocommerce widget_product_categories">
+                    <h5 class="widget-title">Categories</h5>
+                    <ul class="product-categories">
+                        <li class="cat-item">
+                            <a href="shop.php" class="active">Car Towing</a>
+                        </li>
+                        <li class="cat-item">
+                            <a href="shop.php">Flood Insurance Coverage</a>
+                        </li>
+                        <li class="cat-item">
+                            <a href="shop.php">Hail Damage</a>
+                        </li>
+                        <li class="cat-item cat-parent">
+                            <a href="shop.php">Accident Insurance</a>
+                        </li>
+                        <li class="cat-item">
+                            <a href="shop.php">Fire Insurance</a>
+                        </li>
+                        <li class="cat-item cat-parent">
+                            <a href="shop.php">Motorcycle Towing</a>
+                        </li>
+                        <li class="cat-item">
+                            <a href="shop.php">Break repair</a>
+                        </li>
+                        <li class="cat-item cat-parent">
+                            <a href="shop.php">Ingnition test</a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <!-- <div class="widget woocommerce widget_product_categories">
+                    <h5 class="widget-title">Categories Dropdown</h5>
+                    <select name="product_cat" class="dropdown_product_cat">
+                        <option value="" selected="selected">Select a category</option>
+                        <option class="level-0" value="cartowing">CarTowing</option>
+                        <option class="level-1" value="hail-damage">Hail Damage</option>
+                        <option class="level-1" value="flood-insurance-coverage">Flood Insurance Coverage</option>
+                        <option class="level-0" value="accident-insurance">Accident Insurance</option>
+                        <option class="level-1" value="fire-insurance">Fire Insurance</option>
+                        <option class="level-1" value="motorcycle-towing">Motorcycle Towing</option>
+                        <option class="level-0" value="break-repair">Break repair</option>
+                        <option class="level-1" value="ingnition-test">Ingnition test</option>
+                    </select>
+                </div> -->
+
+
+                <div class="widget woocommerce widget_recently_viewed_products">
+                    <h5 class="widget-title">Viewed Products</h5>
+                    <ul class="product_list_widget">
+                        <li>
+                            <a href="shop-product-right.php">
+                                <img src="images/shop/05.jpg" alt="">
+                                <span class="product-title">Propane Regulator</span>
+                            </a>
+                            <div class="d-flex justify-content-between rating-product">
+                                <div class="star-rating">
+                                    <span style="width:80%">Rated
+                                        <strong class="rating">5.00 </strong>
+                                        out of 5
+                                    </span>
+                                </div>
+                                <a href="#" class="remove" aria-label="Remove this item" data-product_id="73"
+                                    data-product_sku=""><i class="fs-14 ico-trash color-main"></i></a>
+                            </div>
+                            <span class="woocommerce-Price-amount amount">
+                                <span class="woocommerce-Price-currencySymbol">$</span>55.00
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
         </div>
     </div>
 </section>

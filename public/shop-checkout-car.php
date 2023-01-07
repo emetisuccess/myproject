@@ -100,7 +100,7 @@
                 <?php
                 $query = mysqli_query($conn, "SELECT * FROM users WHERE user_id=" . $_SESSION['user_id'] . "");
                 confirm($query);
-                $car_id = $_GET['car_ids'];
+
                 while ($data = fetch_assoc($query)) {
                     $firstname = $data['firstname'];
                     $lastname = $data['lastname'];
@@ -216,7 +216,6 @@
                         </div>
                     </div>
 
-
                     <h5 id="order_review_heading">Your order</h5>
                     <div id="order_review" class="woocommerce-checkout-review-order">
                         <table class="shop_table woocommerce-checkout-review-order-table">
@@ -285,7 +284,6 @@
                                 </noscript>
 
                                 <input type="hidden" name="amount_paid" value="<?php echo $_SESSION['total']; ?>">
-                                <input type="hidden" name="pro_id" value="<?php echo $car_id; ?>">
                                 <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
                                 <button type="submit" class="btn btn-outline-maincolor small-button"
                                     name="check_out_place_car_order">Place order</button>
