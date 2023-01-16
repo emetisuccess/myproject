@@ -50,14 +50,11 @@ if (isset($_POST['add_cat'])) {
         $stmt->execute();
 
         if (!$stmt) {
-
-            die("QUERY FAILED" . mysqli_error($conn));
-
+            die("QUERY FAILED " . mysqli_error($conn));
             header("location: manage_category.php");
         } else {
 
             echo "Vehicle Category Successfully Added";
-
             header("location: manage_category.php");
         }
 

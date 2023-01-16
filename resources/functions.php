@@ -86,15 +86,15 @@ function getVehicles($table, $column, $num)
 
     while ($rows = fetch_assoc($query)) {
         $vehicle_id = $rows['id'];
-        $model = $rows["model"];
+        $model = substr($rows["model"], 0, 15) . "..";
         $price = $rows["price"];
         $image = $rows["vehicle_image"];
 
         $vehicle = <<<DELIMETER
-            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6">
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-6">
                 <div class="card mb-2">
                     <a class="link-scale"
-                        href="shop-car.php?car_ids={$vehicle_id}">
+                        href="shop-car.php?car_ids={$vehicle_id}" id='viewCar' view={$vehicle_id}>
                         <img src="/myproject/resources/uploads/{$image}" width="400px" alt="" style='height:200px'>
                     </a>
                     <div class="card-body">
@@ -128,7 +128,7 @@ function getProducts($table, $column, $num)
         $products = <<<DELIMETER
             <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6">
                 <div class="card mb-3">
-                <a class="link-scale"
+                    <a class="link-scale"
                         href="shop-product.php?pro_id={$product_id}">
                         <img src="/myproject/resources/uploads/{$image}" class='img-fluid' alt="">
                     </a>
@@ -137,8 +137,17 @@ function getProducts($table, $column, $num)
                             <span class="price">
                                 <span>&#8358;</span>{$product_price}
                             </span>
+                            <div>
+                                <i class='fa fa-star text-warning'></i>                            
+                                <i class='fa fa-star text-warning'></i>                            
+                                <i class='fa fa-star text-warning'></i>                            
+                                <i class='fa fa-star text-warning'></i>                            
+                                <i class='fa fa-star text-warning'></i>                            
+                           
+                            </div>
                         <form action="" method="post" style="margin: 0px;">
                             <input type="hidden" id="user_id" value="{$user_id}">
+                            <input type="hidden" id="view" view="{$product_id}">
                             <input type="submit" value="Add to Cart" p_id="{$product_id}" class="btn btn-warning btn-sm addToCart">
                         </form>
                     </div>
@@ -345,8 +354,8 @@ function user_signup()
                         $query->execute();
 
                         if (!$query) {
-                            die("QUERY FAILED" . mysqli_error($conn));
                             redirect("signup.php");
+                            die("QUERY FAILED" . mysqli_error($conn));
                         } else {
                             set_message("<span class='alert alert-warning text-white px-4 py-1 m-0' style='background-color:#ff4e3c;
                             border-radius:48px;'> User Registered Successfully </span>");
@@ -462,22 +471,30 @@ function addVehicle()
         if (isset($vehicle_image)) {
             if ($vehicle_image !== "") {
 
+                $destination_path = "/myproject/resources/uploads" . $vehicle_image;
+
                 $image_size = $_FILES['image']['size'];
                 $allowable_img_ext = array("jpg", "jpeg", "png");
                 $ext = pathinfo($vehicle_image, PATHINFO_EXTENSION);
 
                 if ($image_size > 2000000) {
+
                     set_message("<h3><span class='text-danger'>Image should be less than 2mb</span></h3>");
                     redirect("index.php?add_vehicle");
                     die();
                 } else {
+
                     if (!in_array($ext, $allowable_img_ext)) {
+
                         set_message("<h4><span class='text-danger'> Allowable image types are jpg, png, jpeg</span></h4>");
                         redirect("index.php?add_vehicle");
                         die();
                     } else {
+
                         $source_path = $_FILES['image']['tmp_name'];
+
                         $uploads = move_uploaded_file($source_path, UPLOADS . DS . $vehicle_image);
+
                         if (!$uploads) {
                             set_message("<h4 class='text-center'>Failed To Upload Image</h4>");
                             redirect('index.php?add_vehicle');
@@ -664,6 +681,7 @@ function getSpareparts()
     }
 }
 
+
 function manageVehicles()
 {
     $s = 1;
@@ -693,6 +711,9 @@ function manageVehicles()
                 <td style="vertical-align:middle;">
                     <img src="/myproject/resources/uploads/{$image}" width="100px" height="50px">
                 </td>
+                <td style="vertical-align:middle;">
+                brand name
+                </td>
                 <td style="vertical-align:middle;">{$model}</td>
                 <td style="vertical-align:middle;">{$make}</td>
                 <td style="vertical-align:middle;">{$engine_type}</td>
@@ -710,262 +731,6 @@ function manageVehicles()
             </tr>
         DELIMETER;
         echo $vehicle;
-    }
-}
-
-
-function manageMechanics()
-{
-    $s = 1;
-    global $conn;
-    $query = mysqli_query($conn, "SELECT * FROM tbl_mechanic");
-
-    while ($row = fetch_assoc($query)) {
-
-        $sn = $s++;
-        $id = $row['mech_id'];
-        $fullname = $row['mech_fullname'];
-        $mobile = $row['mech_contact'];
-        $email = $row['mech_email'];
-        $address = $row['mech_address'];
-        $city = $row['mech_city'];
-        $state = $row['mech_state'];
-        $experience = $row['mech_experience'];
-        $work_type = $row['mech_work_type'];
-        $cert = $row['mech_certification'];
-        $image1 = $row['mech_image1'];
-        $image2 = $row['mech_image2'];
-        $image3 = $row['mech_image3'];
-        $duration = $row['mech_hourly_work'];
-        $services = $row['mech_services'];
-
-        $vehicle = <<<DELIMETER
-            <tr>
-                <td style="vertical-align:middle;">{$sn}</td>
-                <td style="vertical-align:middle;">
-                    <img src="/myproject-development/resources/uploads/{$image1}" width="100px" height="50px">
-                </td>
-                <td style="vertical-align:middle;">
-                    <img src="/myproject-development/resources/uploads/{$image2}" width="100px" height="50px">
-                </td>
-                <td style="vertical-align:middle;">
-                    <img src="/myproject-development/resources/uploads/{$image3}" width="100px" height="50px">
-                </td>
-                <td style="vertical-align:middle;">{$fullname}</td>
-                <td style="vertical-align:middle;">{$mobile}</td>
-                <td style="vertical-align:middle;">{$email}</td>
-                <td style="vertical-align:middle;">{$address}</td>
-                <td style="vertical-align:middle;">{$city}</td>
-                <td style="vertical-align:middle;">{$state}</td>
-                <td style="vertical-align:middle;">{$experience}</td>
-                <td style="vertical-align:middle;">{$duration}</td>
-                <td style="vertical-align:middle;">{$cert}</td>
-                <td style="vertical-align:middle;">{$work_type}</td>
-                <td style="vertical-align:middle;">
-                    <a href="/myproject-development/resources/templates/back/delete_mechanic.php?del_mech={$id}" class="p-1 text-danger"><i class="fa fa-trash"></i></a>
-                    <a href="../admin/index.php?edit_mech={$id}" class="p-1"><i class="fa fa-edit"></i></a>
-                </td>
-            </tr>
-        DELIMETER;
-        echo $vehicle;
-    }
-}
-function manageDrivers()
-{
-    $s = 1;
-    global $conn;
-    $query = mysqli_query($conn, "SELECT * FROM tbl_driver");
-
-    while ($row = fetch_assoc($query)) {
-
-        $sn = $s++;
-        $id = $row['driver_id'];
-        $fullname = $row['driver_fullname'];
-        $mobile = $row['driver_mobile'];
-        $email = $row['driver_email'];
-        $address = $row['driver_address'];
-        $city = $row['driver_city'];
-        $state = $row['driver_state'];
-        $driver_birthday = $row['driver_birthday'];
-        $driver_blood_group = $row['driver_blood_group'];
-        $experience = $row['driver_experience'];
-        $driver_class = $row['driver_class'];
-        $driver_image = $row['driver_image'];
-        $driver_licenceno = $row['driver_license_number'];
-        $licence_image_front = $row['driver_license_front'];
-        $licence_image_back = $row['driver_license_back'];
-        $preffered_location = $row['preffered_location'];
-
-
-        $vehicle = <<<DELIMETER
-            <tr>
-                <td style="vertical-align:middle;">{$sn}</td>
-                <td style="vertical-align:middle;">
-                    <img src="/myproject-development/resources/uploads/{$driver_image}" width="100px" height="100px">
-                </td>
-                <td style="vertical-align:middle;">
-                    <img src="/myproject-development/resources/uploads/{$licence_image_front}" width="100px" height="100px">
-                </td>
-                <td style="vertical-align:middle;">
-                    <img src="/myproject-development/resources/uploads/{$licence_image_back}" width="100px" height="100px">
-                </td>
-                <td style="vertical-align:middle;">{$driver_licenceno}</td>
-                <td style="vertical-align:middle;">{$driver_birthday}</td>
-                <td style="vertical-align:middle;">{$driver_blood_group}</td>
-                <td style="vertical-align:middle;">{$fullname}</td>
-                <td style="vertical-align:middle;">{$mobile}</td>
-                <td style="vertical-align:middle;">{$email}</td>
-                <td style="vertical-align:middle;">{$address}</td>
-                <td style="vertical-align:middle;">{$city}</td>
-                <td style="vertical-align:middle;">{$state}</td>
-                <td style="vertical-align:middle;">{$experience}</td>
-                <td style="vertical-align:middle;">{$preffered_location}</td>
-                <td style="vertical-align:middle;">{$driver_class}</td>
-                <td style="vertical-align:middle;">
-                    <a href="/myproject-development/resources/templates/back/delete_driver.php?del_driver={$id}" class="p-1 text-danger"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-        DELIMETER;
-        echo $vehicle;
-    }
-}
-
-function manageUsers()
-{
-    $s = 1;
-    global $conn;
-    $query = mysqli_query($conn, "SELECT * FROM users");
-
-    while ($row = fetch_assoc($query)) {
-
-        $sn = $s++;
-        $id = $row['user_id'];
-        $firstname = $row['firstname'];
-        $lastname = $row['lastname'];
-        $email = $row['email'];
-        $mobile = $row['mobile'];
-        $street = $row['street'];
-        $city = $row['city'];
-        $state = $row['state'];
-        $created_at = $row['created_at'];
-
-        $users = <<<DELIMETER
-            <tr>
-                <td style="vertical-align:middle;">{$sn}</td>
-                
-                <td style="vertical-align:middle;">{$firstname}</td>
-                <td style="vertical-align:middle;">{$lastname}</td>
-                <td style="vertical-align:middle;">{$email}</td>
-                <td style="vertical-align:middle;">{$mobile}</td>
-                <td style="vertical-align:middle;">{$street}</td>
-                <td style="vertical-align:middle;">{$city}</td>
-                <td style="vertical-align:middle;">{$state}</td>
-                <td style="vertical-align:middle;">{$created_at}</td>
-                <td style="vertical-align:middle;">
-                    <a href="/myproject-development/resources/templates/back/delete_user.php?del_user={$id}" class="p-1 text-danger"><i class="fa fa-trash"></i></a>
-                    <a href="../admin/index.php?edit_user={$id}" class="p-1"><i class="fa fa-edit"></i></a>
-                </td>
-            </tr>
-        DELIMETER;
-        echo $users;
-    }
-}
-function manageTowing()
-{
-    $s = 1;
-    global $conn;
-    $query = mysqli_query($conn, "SELECT * FROM registeredcompany");
-
-    while ($row = fetch_assoc($query)) {
-        $sn = $s++;
-        $id = $row['company_id'];
-        $company_name = $row['company_name'];
-        $company_number = $row['contact_number'];
-        $email = $row['contact_email'];
-        $address = $row['address'];
-        $city = $row['city'];
-        $state = $row['state'];
-        $logo = $row['logo'];
-        $charge_per_km = $row['charge_per_km'];
-        $created_at = $row['created_at'];
-
-        $towing = <<<DELIMETER
-            <tr>
-                <td style="vertical-align:middle;">{$sn}</td>
-                <td style="vertical-align:middle;">
-                    <img src="/myproject-development/resources/uploads/{$logo}" width="100px" height="50px">
-                </td>
-                <td style="vertical-align:middle;">{$company_name}</td>
-                <td style="vertical-align:middle;">{$company_number}</td>
-                <td style="vertical-align:middle;">{$email}</td>
-                <td style="vertical-align:middle;">{$address}</td>
-                <td style="vertical-align:middle;">{$city}</td>
-                <td style="vertical-align:middle;">{$state}</td>
-                <td style="vertical-align:middle;">{$charge_per_km}</td>
-                <td style="vertical-align:middle;">{$created_at}</td>
-                <td style="vertical-align:middle;">
-                    <a href="/myproject-development/resources/templates/back/delete_towing.php?del_tow={$id}" class="p-1 text-danger"><i class="fa fa-trash"></i></a>
-                    <a href="../admin/index.php?edit_tow={$id}" class="p-1"><i class="fa fa-edit"></i></a>
-                </td>
-            </tr>
-        DELIMETER;
-        echo $towing;
-    }
-}
-
-
-
-
-function manageBookings()
-{
-    $s = 1;
-    global $conn;
-    $query = mysqli_query($conn, "SELECT * FROM tbl_vehicle_rent");
-
-    while ($row = fetch_assoc($query)) {
-
-        $sn = $s++;
-        $id = $row['rent_id'];
-        $image = $row['vehicle_image'];
-        $pickup_time = $row['pickup_time'];
-        $model = $row['vehicle_type'];
-        $pickup_date = $row['pickup_date'];
-        $drop_off_time = $row['drop_off_time'];
-        $drop_off_date = $row['drop_off_date'];
-        $customer_fullname = $row['customer_firstname'];
-        $customer_lastname = $row['customer_lastname'];
-        $customer_email = $row['customer_email'];
-        $customer_licenceno = $row['customer_licenceno'];
-        $customer_mobile = $row['customer_contact_number'];
-        $flightno = $row['customer_flight_number'];
-        $status = $row['status'];
-
-        $vehicle_rent = <<<DELIMETER
-            <tr>
-                <td style="vertical-align:middle;">{$sn}</td>
-                <td style="vertical-align:middle;">
-                    <img src="/myproject-development/resources/uploads/{$image}" width="100px" height="50px">
-                </td>
-                <td style="vertical-align:middle;">
-                {$model}
-                </td>
-                <td style="vertical-align:middle;">{$pickup_time}</td>
-                <td style="vertical-align:middle;">{$pickup_date}</td>
-                <td style="vertical-align:middle;">{$drop_off_time}</td>
-                <td style="vertical-align:middle;">{$drop_off_date}</td>
-                <td style="vertical-align:middle;">{$customer_fullname}</td>
-                <td style="vertical-align:middle;">{$customer_lastname}</td>
-                <td style="vertical-align:middle;">{$customer_email}</td>
-                <td style="vertical-align:middle;">{$customer_licenceno}</td>
-                <td style="vertical-align:middle;"> {$customer_mobile}</td>
-                <td style="vertical-align:middle;"> {$flightno}</td>
-                <td style="vertical-align:middle;"> {$status}</td>
-                <td style="vertical-align:middle;">
-                    <a href="/myproject-development/resources/templates/back/delete_booking.php?del_booking={$id}" class="p-1 text-danger"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-        DELIMETER;
-        echo $vehicle_rent;
     }
 }
 
@@ -1125,6 +890,10 @@ function updateProduct()
 }
 
 
+
+
+
+
 function shopProduct()
 {
     global $user_id;
@@ -1189,18 +958,22 @@ function reviewVeh()
 {
     global $conn;
     if (isset($_POST['reviewVeh'])) {
+
         $car_ids = $_POST['car_ids'];
         $comment = $_POST['comment'];
         $email = $_POST['email'];
         $fullname = $_POST['author'];
 
         if (!$comment or !$email or !$fullname) {
+
             set_message("<h3><span class='text-danger'>All Fields are Required</span></h3>");
             redirect("shop-car.php");
         } else {
+
             $query = $conn->prepare("INSERT INTO review(veh_id, fullname, email, text) VALUES(?,?,?,?)");
             $query->bind_param("isss", $car_ids, $fullname, $email, $comment);
             $query->execute();
+
             if (!$query) {
                 die("QUERY FAILED" . mysqli_error($conn));
             }
@@ -1210,549 +983,27 @@ function reviewVeh()
 }
 
 
-// vehicle towing function;
-towing();
-function towing()
+
+
+dataSort();
+function dataSort()
 {
-    global $conn;
-    if (isset($_POST['vehicletowing'])) {
+    if (isset($_POST['sorts'])) {
 
-        $year = $_POST['year'];
-        $model_name = $_POST['model_name'];
-        $make = $_POST['make'];
-        $color = $_POST['color'];
-        $contact_name = $_POST['contact_name'];
-        $contact_number = $_POST['contact_number'];
-        $address = $_POST['address'];
-        $city = $_POST['city'];
-        $state = $_POST['state'];
-        $zipcode = $_POST['zipcode'];
-
-
-        if (!$year or !$model_name or !$make or !$color or !$contact_name or !$contact_number or !$address or !$city or !$state or !$zipcode) {
-            echo "All fields are Required";
-        } else {
-            $query = $conn->prepare("INSERT INTO tbl_tow(model_year, model_name, make, color, address, city, state, zipcode, contact_name, contact_number) VALUES(?,?,?,?,?,?,?,?,?,?)");
-            $query->bind_param("ssssssssss", $year, $model_name, $make, $color, $address, $city, $state, $zipcode, $contact_name, $contact_number);
-            $query->execute();
-            if (!$query) {
-                die("QUERY FAILED" . mysqli_error($conn));
-            } else {
-                echo "Request Submitted Successfully";
-            }
+        $orderby = $_POST['orderby'];
+        switch ($orderby) {
+            case "popularity":
+                echo "emeti";
+                break;
+            case "rating":
+                echo "sunday";
+                break;
         }
     }
 }
 
-
-function registerTowingCompany()
-{
-    global $conn;
-    if (isset($_POST['register_company'])) {
-
-        $logo = $_FILES['company_logo']['name'];
-        $company_name = $_POST['company_name'];
-        $contact_number = $_POST['company_contact_number'];
-        $contact_email = $_POST['contact_email'];
-        $address = $_POST['address'];
-        $city = $_POST['city'];
-        $state = $_POST['state'];
-        $zipcode = $_POST['zipcode'];
-
-
-
-        if (isset($logo)) {
-            if ($logo !== "") {
-                $image_size = $_FILES['company_logo']['size'];
-                $allowable_img_ext = array("jpg", "jpeg", "png");
-                $ext = pathinfo($logo, PATHINFO_EXTENSION);
-
-                if ($image_size > 2000000) {
-                    set_message("<h3><span class='text-danger'>Image should be less than 2mb</span></h3>");
-                    redirect("index.php?add_vehicle");
-                    die();
-                } else {
-                    if (!in_array($ext, $allowable_img_ext)) {
-                        set_message("<h4><span class='text-danger'> Allowable image types are jpg, png, jpeg</span></h4>");
-                        redirect("index.php?add_vehicle");
-                        die();
-                    } else {
-                        $source_path = $_FILES['company_logo']['tmp_name'];
-                        $uploads = move_uploaded_file($source_path, UPLOADS . DS . $logo);
-                        if (!$uploads) {
-                            set_message("<h4 class='text-center'>Failed To Upload Image</h4>");
-                            redirect('index.php?add_vehicle');
-                            die();
-                        }
-                    }
-                }
-            } else {
-                set_message("<h4 class='text-center text-danger'>Image shouldn't be empty</h4>");
-                redirect("index.php?add_vehicle");
-            }
-        }
-
-
-        if (!$logo or !$company_name or !$contact_number or !$contact_email or !$address or !$city or !$state or !$zipcode) {
-            echo "All Fields are Required";
-        } else {
-            $query = $conn->prepare("INSERT INTO registeredcompany(company_name, contact_number, contact_email, address, city, state, zipcode, logo) VALUES(?,?,?,?,?,?,?,?)");
-            $query->bind_param("ssssssss",  $company_name, $contact_number, $contact_email, $address, $city, $state, $zipcode, $logo);
-            $query->execute();
-            if (!$query) {
-                die("QUERY FAILED " . mysqli_error($conn));
-            } else {
-                echo "Company Registered Successfully";
-            }
-        }
-    }
-}
-
-function vehicleLease()
-{
-    global $conn;
-    if (isset($_POST['vehicleLease'])) {
-
-        $image1 = $_FILES['image1']['name'];
-        $image2 = $_FILES['image2']['name'];
-        $image3 = $_FILES['image3']['name'];
-        $model_year = $_POST['model_year'];
-        $model_name = $_POST['model_name'];
-        $make = $_POST['make'];
-        $color = $_POST['color'];
-        $contact_name = $_POST['contact_name'];
-        $contact_number = $_POST['contact_number'];
-        $address = $_POST['address'];
-        $city = $_POST['city'];
-        $state = $_POST['state'];
-        $zipcode = $_POST['zipcode'];
-
-
-        if (isset($image1)) {
-            if ($image1 !== "") {
-                $image_size = $_FILES['image1']['size'];
-                $allowable_img_ext = array("jpg", "jpeg", "png");
-                $ext = pathinfo($image1, PATHINFO_EXTENSION);
-
-                if ($image_size > 2000000) {
-                    set_message("<h3><span class='text-danger'>Image should be less than 2mb</span></h3>");
-                    redirect("index.php?add_vehicle");
-                    die();
-                } else {
-                    if (!in_array($ext, $allowable_img_ext)) {
-                        set_message("<h4><span class='text-danger'> Allowable image types are jpg, png, jpeg</span></h4>");
-                        redirect("index.php?add_vehicle");
-                        die();
-                    } else {
-                        $source_path = $_FILES['image1']['tmp_name'];
-                        $uploads = move_uploaded_file($source_path, UPLOADS . DS . $image1);
-                        if (!$uploads) {
-                            set_message("<h4 class='text-center'>Failed To Upload Image</h4>");
-                            redirect('index.php?add_vehicle');
-                            die();
-                        }
-                    }
-                }
-            } else {
-                set_message("<h4 class='text-center text-danger'>Image shouldn't be empty</h4>");
-                redirect("index.php?add_vehicle");
-            }
-        }
-
-        if (isset($image2)) {
-            if ($image2 !== "") {
-                $image_size = $_FILES['image2']['size'];
-                $allowable_img_ext = array("jpg", "jpeg", "png");
-                $ext = pathinfo($image2, PATHINFO_EXTENSION);
-
-                if ($image_size > 2000000) {
-                    set_message("<h3><span class='text-danger'>Image should be less than 2mb</span></h3>");
-                    redirect("index.php?add_vehicle");
-                    die();
-                } else {
-                    if (!in_array($ext, $allowable_img_ext)) {
-                        set_message("<h4><span class='text-danger'> Allowable image types are jpg, png, jpeg</span></h4>");
-                        redirect("index.php?add_vehicle");
-                        die();
-                    } else {
-                        $source_path = $_FILES['image2']['tmp_name'];
-                        $uploads = move_uploaded_file($source_path, UPLOADS . DS . $image2);
-                        if (!$uploads) {
-                            set_message("<h4 class='text-center'>Failed To Upload Image</h4>");
-                            redirect('index.php?add_vehicle');
-                            die();
-                        }
-                    }
-                }
-            } else {
-                set_message("<h4 class='text-center text-danger'>Image shouldn't be empty</h4>");
-                redirect("index.php?add_vehicle");
-            }
-        }
-
-        if (isset($image3)) {
-            if ($image3 !== "") {
-                $image_size = $_FILES['image3']['size'];
-                $allowable_img_ext = array("jpg", "jpeg", "png");
-                $ext = pathinfo($image3, PATHINFO_EXTENSION);
-
-                if ($image_size > 2000000) {
-                    set_message("<h3><span class='text-danger'>Image should be less than 2mb</span></h3>");
-                    redirect("index.php?add_vehicle");
-                    die();
-                } else {
-                    if (!in_array($ext, $allowable_img_ext)) {
-                        set_message("<h4><span class='text-danger'> Allowable image types are jpg, png, jpeg</span></h4>");
-                        redirect("index.php?add_vehicle");
-                        die();
-                    } else {
-                        $source_path = $_FILES['image3']['tmp_name'];
-                        $uploads = move_uploaded_file($source_path, UPLOADS . DS . $image3);
-                        if (!$uploads) {
-                            set_message("<h4 class='text-center'>Failed To Upload Image</h4>");
-                            redirect('index.php?add_vehicle');
-                            die();
-                        }
-                    }
-                }
-            } else {
-                set_message("<h4 class='text-center text-danger'>Image shouldn't be empty</h4>");
-                redirect("index.php?add_vehicle");
-            }
-        }
-
-        if (!$image1 or !$image2 or !$image3 or !$model_year or !$model_name or !$make or !$color or !$contact_name or !$contact_number or !$address or !$city or !$state or !$zipcode) {
-            echo "All Fields are Required";
-        } else {
-
-            $query = $conn->prepare("INSERT INTO tbl_lease(model_year, model_name, make, color, address, city, state, zipcode, contact_name, contact_number, image1, image2, image3) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            $query->bind_param("sssssssssssss", $model_year, $model_name, $make, $color, $address, $city, $state, $zipcode, $contact_name, $contact_number, $image1, $image2, $image3);
-            $query->execute();
-            if (!$query) {
-                die("QUERY FAILED " . mysqli_error($conn));
-            } else {
-                echo "Vehicle Registered Successfully";
-            }
-        }
-    }
-}
-
-function registerDriver()
-{
-    global $conn;
-
-    if (isset($_POST['register_driver'])) {
-        $user_image = $_FILES['user_image']['name'];
-        $licenseimage1 = $_FILES['licenseimage1']['name'];
-        $licenseimage2 = $_FILES['licenseimage2']['name'];
-        $fullname = $_POST['fullname'];
-        $phone = $_POST['phone'];
-        $address = $_POST['address'];
-        $city = $_POST['city'];
-        $state = $_POST['state'];
-        $blood_group = $_POST['blood_group'];
-        $dob = $_POST['dob'];
-        $email = $_POST['email'];
-        $licenseno = $_POST['licenseno'];
-        $driver_class = $_POST['driver_class'];
-        $years_experience = $_POST['years_experience'];
-        $worklocation = $_POST['worklocation'];
-
-
-        if (strlen($licenseno) <= 10 or strlen($licenseno) > 11) {
-            echo "invalid License Number";
-        } else {
-            if (isset($user_image)) {
-                if ($user_image !== "") {
-                    $image_size = $_FILES['user_image']['size'];
-                    $allowable_img_ext = array("jpg", "jpeg", "png");
-                    $ext = pathinfo($user_image, PATHINFO_EXTENSION);
-
-                    if ($image_size > 2000000) {
-                        set_message("<h3><span class='text-danger'>Image should be less than 2mb</span></h3>");
-                        redirect("index.php");
-                        die();
-                    } else {
-                        if (!in_array($ext, $allowable_img_ext)) {
-                            set_message("<h4><span class='text-danger'> Allowable image types are jpg, png, jpeg</span></h4>");
-                            redirect("index.php");
-                            die();
-                        } else {
-                            $source_path = $_FILES['user_image']['tmp_name'];
-                            $uploads = move_uploaded_file($source_path, UPLOADS . DS . $user_image);
-                            if (!$uploads) {
-                                set_message("<h4 class='text-center'>Failed To Upload Image</h4>");
-                                redirect('index.php');
-                                die();
-                            }
-                        }
-                    }
-                } else {
-                    set_message("<h4 class='text-center text-danger'>Image shouldn't be empty</h4>");
-                    redirect("index.php");
-                }
-            }
-
-            if (isset($licenseimage1)) {
-                if ($licenseimage1 !== "") {
-                    $image_size = $_FILES['licenseimage1']['size'];
-                    $allowable_img_ext = array("jpg", "jpeg", "png");
-                    $ext = pathinfo($licenseimage1, PATHINFO_EXTENSION);
-
-                    if ($image_size > 2000000) {
-                        set_message("<h3><span class='text-danger'>Image should be less than 2mb</span></h3>");
-                        redirect("index.php");
-                        die();
-                    } else {
-                        if (!in_array($ext, $allowable_img_ext)) {
-                            set_message("<h4><span class='text-danger'> Allowable image types are jpg, png, jpeg</span></h4>");
-                            redirect("index.php");
-                            die();
-                        } else {
-                            $source_path = $_FILES['licenseimage1']['tmp_name'];
-                            $uploads = move_uploaded_file($source_path, UPLOADS . DS . $licenseimage1);
-                            if (!$uploads) {
-                                set_message("<h4 class='text-center'>Failed To Upload Image</h4>");
-                                redirect('index.php');
-                                die();
-                            }
-                        }
-                    }
-                } else {
-                    set_message("<h4 class='text-center text-danger'>Image shouldn't be empty</h4>");
-                    redirect("index.php");
-                }
-            }
-
-            if (isset($licenseimage2)) {
-                if ($licenseimage2 !== "") {
-                    $image_size = $_FILES['licenseimage2']['size'];
-                    $allowable_img_ext = array("jpg", "jpeg", "png");
-                    $ext = pathinfo($licenseimage2, PATHINFO_EXTENSION);
-
-                    if ($image_size > 2000000) {
-                        set_message("<h3><span class='text-danger'>Image should be less than 2mb</span></h3>");
-                        redirect("index.php");
-                        die();
-                    } else {
-                        if (!in_array($ext, $allowable_img_ext)) {
-                            set_message("<h4><span class='text-danger'> Allowable image types are jpg, png, jpeg</span></h4>");
-                            redirect("index.php");
-                            die();
-                        } else {
-                            $source_path = $_FILES['licenseimage2']['tmp_name'];
-                            $uploads = move_uploaded_file($source_path, UPLOADS . DS . $licenseimage2);
-                            if (!$uploads) {
-                                set_message("<h4 class='text-center'>Failed To Upload Image</h4>");
-                                redirect('index.php');
-                                die();
-                            }
-                        }
-                    }
-                } else {
-                    set_message("<h4 class='text-center text-danger'>Image shouldn't be empty</h4>");
-                    redirect("index.php");
-                }
-            }
-
-            if (!$user_image or !$licenseimage1 or !$licenseimage2 or !$fullname or !$phone or !$address or !$city or !$state or !$blood_group or !$dob or !$email or !$licenseno or !$driver_class or !$years_experience or !$worklocation) {
-                echo "All fields are Required";
-            } else {
-                $query = $conn->prepare("INSERT INTO tbl_driver(driver_fullname, driver_mobile, driver_address, driver_city, driver_state, driver_blood_group, driver_birthday, driver_email,driver_license_number, driver_license_front, driver_license_back, driver_image, driver_class, driver_experience, preffered_location) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-
-                $query->bind_param("sssssssssssssss", $fullname, $phone, $address, $city, $state, $blood_group, $dob, $email, $licenseno, $licenseimage1, $licenseimage2, $user_image, $driver_class, $years_experience, $worklocation);
-                $query->execute();
-
-                if (!$query) {
-                    die("QUERY FAILED " . mysqli_error($conn));
-                } else {
-                    echo "Registered Successfully, Wait for 2 days for you to be verified. Thanks!";
-                }
-            }
-        }
-    }
-}
-
-function registerMechanic()
-{
-    global $conn;
-    if (isset($_POST['register_mechanic'])) {
-
-        $image1 = $_FILES['image1']['name'];
-        $image2 = $_FILES['image2']['name'];
-        $image3 = $_FILES['image3']['name'];
-        $fullname = $_POST['fullname'];
-        $phone = $_POST['phone'];
-        $email = $_POST['email'];
-        $address = $_POST['address'];
-        $city = $_POST['city'];
-        $state = $_POST['state'];
-        $experience = $_POST['experience'];
-        $hoursperweek = $_POST['hoursperweek'];
-        $certification = $_POST['certification'];
-        $duration = $_POST['duration'] ?? "";
-        $repair = $_POST['repair'] ?? "";
-        $diagnostic = $_POST['diagnostic'] ?? "";
-        $pre_purchase = $_POST['pre_purchase'] ?? "";
-        $oilchange = $_POST['oilchange'] ?? "";
-        $services = $repair . " " . $diagnostic . " " . $pre_purchase . " " . $oilchange;
-
-        if (isset($image1)) {
-            if ($image1 !== "") {
-                $image_size = $_FILES['image1']['size'];
-                $allowable_img_ext = array("jpg", "jpeg", "png");
-                $ext = pathinfo($image1, PATHINFO_EXTENSION);
-
-                if ($image_size > 2000000) {
-                    set_message("<h3><span class='text-danger'>Image should be less than 2mb</span></h3>");
-                    redirect("index.php");
-                    die();
-                } else {
-                    if (!in_array($ext, $allowable_img_ext)) {
-                        set_message("<h4><span class='text-danger'> Allowable image types are jpg, png, jpeg</span></h4>");
-                        redirect("index.php");
-                        die();
-                    } else {
-                        $source_path = $_FILES['image1']['tmp_name'];
-                        $uploads = move_uploaded_file($source_path, UPLOADS . DS . $image1);
-                        if (!$uploads) {
-                            set_message("<h4 class='text-center'>Failed To Upload Image</h4>");
-                            redirect('index.php');
-                            die();
-                        }
-                    }
-                }
-            } else {
-                set_message("<h4 class='text-center text-danger'>Image shouldn't be empty</h4>");
-                redirect("index.php");
-            }
-        }
-
-        if (isset($image2)) {
-            if ($image2 !== "") {
-                $image_size = $_FILES['image2']['size'];
-                $allowable_img_ext = array("jpg", "jpeg", "png");
-                $ext = pathinfo($image2, PATHINFO_EXTENSION);
-
-                if ($image_size > 2000000) {
-                    set_message("<h3><span class='text-danger'>Image should be less than 2mb</span></h3>");
-                    redirect("index.php");
-                    die();
-                } else {
-                    if (!in_array($ext, $allowable_img_ext)) {
-                        set_message("<h4><span class='text-danger'> Allowable image types are jpg, png, jpeg</span></h4>");
-                        redirect("index.php");
-                        die();
-                    } else {
-                        $source_path = $_FILES['image2']['tmp_name'];
-                        $uploads = move_uploaded_file($source_path, UPLOADS . DS . $image2);
-                        if (!$uploads) {
-                            set_message("<h4 class='text-center'>Failed To Upload Image</h4>");
-                            redirect('index.php');
-                            die();
-                        }
-                    }
-                }
-            } else {
-                set_message("<h4 class='text-center text-danger'>Image shouldn't be empty</h4>");
-                redirect("index.php");
-            }
-        }
-
-        if (isset($image3)) {
-            if ($image3 !== "") {
-                $image_size = $_FILES['image3']['size'];
-                $allowable_img_ext = array("jpg", "jpeg", "png");
-                $ext = pathinfo($image3, PATHINFO_EXTENSION);
-
-                if ($image_size > 2000000) {
-                    set_message("<h3><span class='text-danger'>Image should be less than 2mb</span></h3>");
-                    redirect("index.php");
-                    die();
-                } else {
-                    if (!in_array($ext, $allowable_img_ext)) {
-                        set_message("<h4><span class='text-danger'> Allowable image types are jpg, png, jpeg</span></h4>");
-                        redirect("index.php");
-                        die();
-                    } else {
-                        $source_path = $_FILES['image3']['tmp_name'];
-                        $uploads = move_uploaded_file($source_path, UPLOADS . DS . $image3);
-                        if (!$uploads) {
-                            set_message("<h4 class='text-center'>Failed To Upload Image</h4>");
-                            redirect('index.php');
-                            die();
-                        }
-                    }
-                }
-            } else {
-                set_message("<h4 class='text-center text-danger'>Image shouldn't be empty</h4>");
-                redirect("index.php?add_vehicle");
-            }
-        }
-
-        if (!$fullname or !$address or !$duration or !$email or !$phone or !$city or !$state or !$experience or !$hoursperweek or !$duration or !$image1 or !$image2 or !$image3 or !$services) {
-            echo "All fields are Required";
-        } else {
-            $query = $conn->prepare("INSERT INTO tbl_mechanic(mech_fullname, mech_contact, mech_email, mech_address, mech_city, mech_state, mech_experience, mech_work_type, mech_certification, mech_image1, mech_image2, mech_image3, mech_services, mech_hourly_work) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            $query->bind_param("ssssssssssssss", $fullname, $phone, $email, $address, $city, $state, $experience, $duration, $certification, $image1, $image2, $image3, $services, $hoursperweek);
-            $query->execute();
-
-            if (!$query) {
-                die("QUERY FAILED " . mysqli_error($conn));
-            } else {
-                echo "You have been Registered, after verification we will notify you. Thanks!!";
-            }
-        }
-    }
-}
-
-
-if (isset($_POST['towing_search'])) {
-    $towing_search = $_POST['search'];
-
-    if ($towing_search == "") {
-        redirect("towing.php");
-    }
-    redirect("ts.php?q=$towing_search");
-}
-
-if (isset($_POST['driver_search'])) {
-    $search_driver = $_POST['search'];
-
-    if ($search_driver == "") {
-        redirect("drivers.php");
-    } else {
-        redirect("ds.php?q=$search_driver");
-    }
-}
-
-if (isset($_POST['mechanic_search'])) {
-    $search_mechanic = $_POST['search'];
-    if ($search_mechanic == "") {
-        redirect("mechanic.php");
-    } else {
-        redirect("ms.php?q=$search_mechanic");
-    }
-}
-
-if (isset($_POST['vehicle_search'])) {
-    $search_vehicle = $_POST['search'];
-    if ($search_vehicle == "") {
-        redirect("vehiclelease.php");
-    } else {
-        redirect("vs.php?q=$search_vehicle");
-    }
-}
-
-if (isset($_POST['search_product'])) {
-    $search_product = $_POST['product_search'];
-    if ($search_product == "") {
-        redirect("shop.php");
-    } else {
-        redirect("shop.php?s=$search_product");
-    }
-}
 ?>
+
 
 <?php
 if (isset($_POST["xavi"])) {

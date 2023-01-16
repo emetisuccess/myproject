@@ -142,15 +142,17 @@
 </div><!-- eof #canvas -->
 
 
+<script src="assets/js/jquery.min.js"></script>
 <script src="js/compressed.js"></script>
 <script src="js/main.js"></script>
 <script src="js/script.js"></script>
-<script src="js/switcher.js"></script>
+<!-- <script src="assets/js/owl.carousel.min.js"></script> -->
+
 
 <!-- Google Map Script -->
-<script type="text/javascript"
+<!-- <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0pr5xCHpaTGv12l73IExOHDJisBP2FK4&amp;callback=initGoogleMap">
-</script>
+</script> -->
 </body>
 
 </html>
