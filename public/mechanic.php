@@ -9,6 +9,7 @@
 <?php require(TEMPLATE_FRONT . DS . "addressmenu1.php"); ?>
 
 <?php require(TEMPLATE_FRONT . DS . "header1.php"); ?>
+
 <section class="page_title ds s-pt-105 s-pb-50 s-pt-lg-115 s-pb-lg-60">
     <div class="divider-3 d-none d-lg-block"></div>
     <div class="container">
@@ -125,14 +126,14 @@
             <div class="mt-3 py-50 px-50 cs cs2 mx-auto" style="width:100%; background-color: #ff4e3c;">
                 <div class="widget widget_search">
                     <!-- <h5 class="widget-title">Search Widget</h5> -->
-                    <form role="search" method="get" class="search-form" action="http://webdesign-finder.com/">
+                    <form role="search" method="Post" action="">
                         <label for="search-form-widget">
                             <span class="screen-reader-text">Search for:</span>
                         </label>
                         <input type="search" id="search-form-widget" class="search-field"
                             placeholder="Input Your Location To Search Mechanics Around" style="padding-left: 5px;"
                             value="" name="search">
-                        <button type="submit" class="search-submit">
+                        <button type="submit" name="mechanic_search" class="search-submit">
                             <span class="screen-reader-text">Input Your Location To Search Mechanics Around </span>
                         </button>
                     </form>

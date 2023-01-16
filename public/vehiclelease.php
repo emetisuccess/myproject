@@ -120,7 +120,24 @@
                 <h3 class="text-center mt-5 mb-2">Find nice Vehicles to Hire Near You Instantly</h3>
                 <p class=" text-center mt-3 p-2">Stranded on arrival to the city? With one click you can instantly hire
                     a vehicle near your location. No clubs to join or apps to download. Just direct access to
-                    thousands of trusted services.</p>
+                    thousands of trusted services.
+                </p>
+            </div>
+            <div class="mt-3 py-50 px-50 cs cs2 mx-auto" style="width:100%; background-color: #ff4e3c;">
+                <div class="widget widget_search">
+                    <!-- <h5 class="widget-title">Search Widget</h5> -->
+                    <form role="search" method="Post" action="">
+                        <label for="search-form-widget">
+                            <span class="screen-reader-text">Search for:</span>
+                        </label>
+                        <input type="search" id="search-form-widget" class="search-field"
+                            placeholder="Input Your Location To Search Mechanics Around" style="padding-left: 5px;"
+                            name="search">
+                        <button type="submit" name="vehicle_search" class="search-submit">
+                            <span class="screen-reader-text">Input Your Location To Search Vehicle Around </span>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -132,7 +149,7 @@
             $query = mysqli_query($conn, "SELECT * FROM tbl_lease");
             while ($data = fetch_assoc($query)) {
             ?>
-            <div class="col-md-6 col-lg-3 col-6 my-1">
+            <div class="col-xl-3 col-md-6 col-lg-3 col-sm-6 col-6 my-1">
                 <div class="card">
                     <a href="vehicledetails.php?vehicle_id=<?php echo $data['lease_id']; ?>">
                         <img class="card-img-top"
@@ -141,14 +158,8 @@
                     </a>
                     <div class="card-body text-center">
                         <p class="my-0"><?php echo $data['model_year'] . " " . $data['model_name']; ?></h6>
+                        <p class="m-0">&#8358;<?php echo $data['charge_per_day']; ?>/Day</p>
                         <p class="m-0"><?php echo $data['contact_number']; ?></p>
-                        <span class="text-warning my-0">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </span>
                         <p class="card-text m-0"><?php echo $data['city'] ?>,
                             <?php echo $data['state']; ?></p>
                         </a>

@@ -191,25 +191,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 mb-5">
-                <h3 class="text-center mt-5 mb-2">Find Tow Trucks Near You Instantly</h3>
+                <h3 class="text-center mt-5 mb-2">Search result for Towing Trucks Near You</h3>
                 <p class=" text-center mt-3 p-2">Stranded on the side of the road? With one click you can instantly call
                     towing services near your location. No clubs to join or apps to download. Just direct access to
                     thousands of trusted services.</p>
-            </div>
-            <div class="mt-3 py-50 px-50 cs cs2 mx-auto mb-3" style="width:100%; background-color: #ff4e3c;">
-                <div class="widget widget_search">
-                    <!-- <h5 class="widget-title">Search Widget</h5> -->
-                    <form role="search" method="POST" action="">
-                        <label for="search-form-widget">
-                            <span class="screen-reader-text">Search for:</span>
-                        </label>
-                        <input type="search" id="search-form-widget" class="search-field pl-3"
-                            placeholder="Input Your Location To Search Towing Vehicle Around" name="search">
-                        <button type="submit" name="towing_search" class="search-submit">
-                            <span class="screen-reader-text">Input Your Location To Search Towing Vehicle Around </span>
-                        </button>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
@@ -218,8 +203,12 @@
     <div class="container">
         <div class="row">
             <?php
-            $query = mysqli_query($conn, "SELECT * FROM registeredcompany");
-            while ($data = fetch_assoc($query)) {
+            if (isset($_GET['q'])) {
+                $towing_search = $_GET['q'];
+                $query = mysqli_query($conn, "SELECT * FROM registeredcompany WHERE city LIKE '%$towing_search%' or state LIKE '%$towing_search%'");
+
+                if (mysqli_num_rows($query) > 0) {
+                    while ($data = fetch_assoc($query)) {
             ?>
             <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 my-2">
                 <div class="card">
@@ -242,7 +231,11 @@
                     </div>
                 </div>
             </div>
-            <?php } ?>
+            <?php }
+                } else {
+                    echo "The Search Result $towing_search is not Available";
+                }
+            } ?>
         </div>
     </div>
 </section>
