@@ -664,7 +664,6 @@ function getSpareparts()
     }
 }
 
-
 function manageVehicles()
 {
     $s = 1;
@@ -694,9 +693,6 @@ function manageVehicles()
                 <td style="vertical-align:middle;">
                     <img src="/myproject/resources/uploads/{$image}" width="100px" height="50px">
                 </td>
-                <td style="vertical-align:middle;">
-                brand name
-                </td>
                 <td style="vertical-align:middle;">{$model}</td>
                 <td style="vertical-align:middle;">{$make}</td>
                 <td style="vertical-align:middle;">{$engine_type}</td>
@@ -714,6 +710,262 @@ function manageVehicles()
             </tr>
         DELIMETER;
         echo $vehicle;
+    }
+}
+
+
+function manageMechanics()
+{
+    $s = 1;
+    global $conn;
+    $query = mysqli_query($conn, "SELECT * FROM tbl_mechanic");
+
+    while ($row = fetch_assoc($query)) {
+
+        $sn = $s++;
+        $id = $row['mech_id'];
+        $fullname = $row['mech_fullname'];
+        $mobile = $row['mech_contact'];
+        $email = $row['mech_email'];
+        $address = $row['mech_address'];
+        $city = $row['mech_city'];
+        $state = $row['mech_state'];
+        $experience = $row['mech_experience'];
+        $work_type = $row['mech_work_type'];
+        $cert = $row['mech_certification'];
+        $image1 = $row['mech_image1'];
+        $image2 = $row['mech_image2'];
+        $image3 = $row['mech_image3'];
+        $duration = $row['mech_hourly_work'];
+        $services = $row['mech_services'];
+
+        $vehicle = <<<DELIMETER
+            <tr>
+                <td style="vertical-align:middle;">{$sn}</td>
+                <td style="vertical-align:middle;">
+                    <img src="/myproject-development/resources/uploads/{$image1}" width="100px" height="50px">
+                </td>
+                <td style="vertical-align:middle;">
+                    <img src="/myproject-development/resources/uploads/{$image2}" width="100px" height="50px">
+                </td>
+                <td style="vertical-align:middle;">
+                    <img src="/myproject-development/resources/uploads/{$image3}" width="100px" height="50px">
+                </td>
+                <td style="vertical-align:middle;">{$fullname}</td>
+                <td style="vertical-align:middle;">{$mobile}</td>
+                <td style="vertical-align:middle;">{$email}</td>
+                <td style="vertical-align:middle;">{$address}</td>
+                <td style="vertical-align:middle;">{$city}</td>
+                <td style="vertical-align:middle;">{$state}</td>
+                <td style="vertical-align:middle;">{$experience}</td>
+                <td style="vertical-align:middle;">{$duration}</td>
+                <td style="vertical-align:middle;">{$cert}</td>
+                <td style="vertical-align:middle;">{$work_type}</td>
+                <td style="vertical-align:middle;">
+                    <a href="/myproject-development/resources/templates/back/delete_mechanic.php?del_mech={$id}" class="p-1 text-danger"><i class="fa fa-trash"></i></a>
+                    <a href="../admin/index.php?edit_mech={$id}" class="p-1"><i class="fa fa-edit"></i></a>
+                </td>
+            </tr>
+        DELIMETER;
+        echo $vehicle;
+    }
+}
+function manageDrivers()
+{
+    $s = 1;
+    global $conn;
+    $query = mysqli_query($conn, "SELECT * FROM tbl_driver");
+
+    while ($row = fetch_assoc($query)) {
+
+        $sn = $s++;
+        $id = $row['driver_id'];
+        $fullname = $row['driver_fullname'];
+        $mobile = $row['driver_mobile'];
+        $email = $row['driver_email'];
+        $address = $row['driver_address'];
+        $city = $row['driver_city'];
+        $state = $row['driver_state'];
+        $driver_birthday = $row['driver_birthday'];
+        $driver_blood_group = $row['driver_blood_group'];
+        $experience = $row['driver_experience'];
+        $driver_class = $row['driver_class'];
+        $driver_image = $row['driver_image'];
+        $driver_licenceno = $row['driver_license_number'];
+        $licence_image_front = $row['driver_license_front'];
+        $licence_image_back = $row['driver_license_back'];
+        $preffered_location = $row['preffered_location'];
+
+
+        $vehicle = <<<DELIMETER
+            <tr>
+                <td style="vertical-align:middle;">{$sn}</td>
+                <td style="vertical-align:middle;">
+                    <img src="/myproject-development/resources/uploads/{$driver_image}" width="100px" height="100px">
+                </td>
+                <td style="vertical-align:middle;">
+                    <img src="/myproject-development/resources/uploads/{$licence_image_front}" width="100px" height="100px">
+                </td>
+                <td style="vertical-align:middle;">
+                    <img src="/myproject-development/resources/uploads/{$licence_image_back}" width="100px" height="100px">
+                </td>
+                <td style="vertical-align:middle;">{$driver_licenceno}</td>
+                <td style="vertical-align:middle;">{$driver_birthday}</td>
+                <td style="vertical-align:middle;">{$driver_blood_group}</td>
+                <td style="vertical-align:middle;">{$fullname}</td>
+                <td style="vertical-align:middle;">{$mobile}</td>
+                <td style="vertical-align:middle;">{$email}</td>
+                <td style="vertical-align:middle;">{$address}</td>
+                <td style="vertical-align:middle;">{$city}</td>
+                <td style="vertical-align:middle;">{$state}</td>
+                <td style="vertical-align:middle;">{$experience}</td>
+                <td style="vertical-align:middle;">{$preffered_location}</td>
+                <td style="vertical-align:middle;">{$driver_class}</td>
+                <td style="vertical-align:middle;">
+                    <a href="/myproject-development/resources/templates/back/delete_driver.php?del_driver={$id}" class="p-1 text-danger"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        DELIMETER;
+        echo $vehicle;
+    }
+}
+
+function manageUsers()
+{
+    $s = 1;
+    global $conn;
+    $query = mysqli_query($conn, "SELECT * FROM users");
+
+    while ($row = fetch_assoc($query)) {
+
+        $sn = $s++;
+        $id = $row['user_id'];
+        $firstname = $row['firstname'];
+        $lastname = $row['lastname'];
+        $email = $row['email'];
+        $mobile = $row['mobile'];
+        $street = $row['street'];
+        $city = $row['city'];
+        $state = $row['state'];
+        $created_at = $row['created_at'];
+
+        $users = <<<DELIMETER
+            <tr>
+                <td style="vertical-align:middle;">{$sn}</td>
+                
+                <td style="vertical-align:middle;">{$firstname}</td>
+                <td style="vertical-align:middle;">{$lastname}</td>
+                <td style="vertical-align:middle;">{$email}</td>
+                <td style="vertical-align:middle;">{$mobile}</td>
+                <td style="vertical-align:middle;">{$street}</td>
+                <td style="vertical-align:middle;">{$city}</td>
+                <td style="vertical-align:middle;">{$state}</td>
+                <td style="vertical-align:middle;">{$created_at}</td>
+                <td style="vertical-align:middle;">
+                    <a href="/myproject-development/resources/templates/back/delete_user.php?del_user={$id}" class="p-1 text-danger"><i class="fa fa-trash"></i></a>
+                    <a href="../admin/index.php?edit_user={$id}" class="p-1"><i class="fa fa-edit"></i></a>
+                </td>
+            </tr>
+        DELIMETER;
+        echo $users;
+    }
+}
+function manageTowing()
+{
+    $s = 1;
+    global $conn;
+    $query = mysqli_query($conn, "SELECT * FROM registeredcompany");
+
+    while ($row = fetch_assoc($query)) {
+        $sn = $s++;
+        $id = $row['company_id'];
+        $company_name = $row['company_name'];
+        $company_number = $row['contact_number'];
+        $email = $row['contact_email'];
+        $address = $row['address'];
+        $city = $row['city'];
+        $state = $row['state'];
+        $logo = $row['logo'];
+        $charge_per_km = $row['charge_per_km'];
+        $created_at = $row['created_at'];
+
+        $towing = <<<DELIMETER
+            <tr>
+                <td style="vertical-align:middle;">{$sn}</td>
+                <td style="vertical-align:middle;">
+                    <img src="/myproject-development/resources/uploads/{$logo}" width="100px" height="50px">
+                </td>
+                <td style="vertical-align:middle;">{$company_name}</td>
+                <td style="vertical-align:middle;">{$company_number}</td>
+                <td style="vertical-align:middle;">{$email}</td>
+                <td style="vertical-align:middle;">{$address}</td>
+                <td style="vertical-align:middle;">{$city}</td>
+                <td style="vertical-align:middle;">{$state}</td>
+                <td style="vertical-align:middle;">{$charge_per_km}</td>
+                <td style="vertical-align:middle;">{$created_at}</td>
+                <td style="vertical-align:middle;">
+                    <a href="/myproject-development/resources/templates/back/delete_towing.php?del_tow={$id}" class="p-1 text-danger"><i class="fa fa-trash"></i></a>
+                    <a href="../admin/index.php?edit_tow={$id}" class="p-1"><i class="fa fa-edit"></i></a>
+                </td>
+            </tr>
+        DELIMETER;
+        echo $towing;
+    }
+}
+
+
+
+
+function manageBookings()
+{
+    $s = 1;
+    global $conn;
+    $query = mysqli_query($conn, "SELECT * FROM tbl_vehicle_rent");
+
+    while ($row = fetch_assoc($query)) {
+
+        $sn = $s++;
+        $id = $row['rent_id'];
+        $image = $row['vehicle_image'];
+        $pickup_time = $row['pickup_time'];
+        $model = $row['vehicle_type'];
+        $pickup_date = $row['pickup_date'];
+        $drop_off_time = $row['drop_off_time'];
+        $drop_off_date = $row['drop_off_date'];
+        $customer_fullname = $row['customer_firstname'];
+        $customer_lastname = $row['customer_lastname'];
+        $customer_email = $row['customer_email'];
+        $customer_licenceno = $row['customer_licenceno'];
+        $customer_mobile = $row['customer_contact_number'];
+        $flightno = $row['customer_flight_number'];
+        $status = $row['status'];
+
+        $vehicle_rent = <<<DELIMETER
+            <tr>
+                <td style="vertical-align:middle;">{$sn}</td>
+                <td style="vertical-align:middle;">
+                    <img src="/myproject-development/resources/uploads/{$image}" width="100px" height="50px">
+                </td>
+                <td style="vertical-align:middle;">
+                {$model}
+                </td>
+                <td style="vertical-align:middle;">{$pickup_time}</td>
+                <td style="vertical-align:middle;">{$pickup_date}</td>
+                <td style="vertical-align:middle;">{$drop_off_time}</td>
+                <td style="vertical-align:middle;">{$drop_off_date}</td>
+                <td style="vertical-align:middle;">{$customer_fullname}</td>
+                <td style="vertical-align:middle;">{$customer_lastname}</td>
+                <td style="vertical-align:middle;">{$customer_email}</td>
+                <td style="vertical-align:middle;">{$customer_licenceno}</td>
+                <td style="vertical-align:middle;"> {$customer_mobile}</td>
+                <td style="vertical-align:middle;"> {$flightno}</td>
+                <td style="vertical-align:middle;"> {$status}</td>
+                <td style="vertical-align:middle;">
+                    <a href="/myproject-development/resources/templates/back/delete_booking.php?del_booking={$id}" class="p-1 text-danger"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        DELIMETER;
+        echo $vehicle_rent;
     }
 }
 
@@ -1345,8 +1597,6 @@ function registerMechanic()
         $oilchange = $_POST['oilchange'] ?? "";
         $services = $repair . " " . $diagnostic . " " . $pre_purchase . " " . $oilchange;
 
-
-
         if (isset($image1)) {
             if ($image1 !== "") {
                 $image_size = $_FILES['image1']['size'];
@@ -1453,6 +1703,53 @@ function registerMechanic()
                 echo "You have been Registered, after verification we will notify you. Thanks!!";
             }
         }
+    }
+}
+
+
+if (isset($_POST['towing_search'])) {
+    $towing_search = $_POST['search'];
+
+    if ($towing_search == "") {
+        redirect("towing.php");
+    }
+    redirect("ts.php?q=$towing_search");
+}
+
+if (isset($_POST['driver_search'])) {
+    $search_driver = $_POST['search'];
+
+    if ($search_driver == "") {
+        redirect("drivers.php");
+    } else {
+        redirect("ds.php?q=$search_driver");
+    }
+}
+
+if (isset($_POST['mechanic_search'])) {
+    $search_mechanic = $_POST['search'];
+    if ($search_mechanic == "") {
+        redirect("mechanic.php");
+    } else {
+        redirect("ms.php?q=$search_mechanic");
+    }
+}
+
+if (isset($_POST['vehicle_search'])) {
+    $search_vehicle = $_POST['search'];
+    if ($search_vehicle == "") {
+        redirect("vehiclelease.php");
+    } else {
+        redirect("vs.php?q=$search_vehicle");
+    }
+}
+
+if (isset($_POST['search_product'])) {
+    $search_product = $_POST['product_search'];
+    if ($search_product == "") {
+        redirect("shop.php");
+    } else {
+        redirect("shop.php?s=$search_product");
     }
 }
 ?>

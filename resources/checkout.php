@@ -82,7 +82,9 @@ if (isset($_POST['update_cart'])) {
 
 
 //  checkout and update users section
-if (isset($_POST['checkout_place_order']) or isset($_POST['check_out_place_car_order'])) {
+if (
+    isset($_POST['checkout_place_order']) or isset($_POST['check_out_place_car_order'])
+) {
 
     $customer_firstname = escape_string($_POST['billing_first_name']);
     $customer_lastname = escape_string($_POST['billing_last_name']);
@@ -116,6 +118,7 @@ if (isset($_POST['checkout_place_order']) or isset($_POST['check_out_place_car_o
 
 
     if ($_POST['checkout_place_order'] == true) {
+
         $request = [
             "tx_ref" => time(),
             "amount" => $paid_amount,
@@ -231,4 +234,101 @@ if (isset($_POST['checkout_place_order']) or isset($_POST['check_out_place_car_o
     }
 }
 
+
+if (isset($_POST['checkout_rent_vehicle'])) {
+
+
+    $ip_add = getenv("REMOTE_ADDR");
+    $veh_id = escape_string($_POST['veh_id']);
+    $customer_id = $_SESSION['user_id'] ?? "";
+    $image1 = escape_string($_POST['image1']);
+    $model_year = escape_string($_POST['model_year']);
+    $make = escape_string($_POST['make']);
+    $seats = escape_string($_POST['seats']);
+    $charge_per_day = escape_string($_POST['charge_per_day']);
+    $contact_name = escape_string($_POST['contact_name']);
+    $contact_number = escape_string($_POST['contact_number']);
+    $vehicle_qty = 1;
+    $location = escape_string($_POST['location']);
+    $pick_up_time = escape_string($_POST['pick_uptime']);
+    $pick_update = escape_string($_POST['pick_update']);
+    $drop_offdate = escape_string($_POST['drop_offdate']);
+    $drop_offtime = escape_string($_POST['drop_offtime']);
+    $customer_email = escape_string($_POST['email']);
+    $customer_title = escape_string($_POST['title']);
+    $customer_firstname = escape_string($_POST['firstname']);
+    $customer_lastname = escape_string($_POST['lastname']);
+    $licenceno = escape_string($_POST['licenceno']);
+    $customer_mobile = escape_string($_POST['cust_number']);
+    $flightno = escape_string($_POST['flightno']);
+    $status = "booked";
+    $pickupdate = date_create($pick_update);
+    $dropoffdate = date_create($drop_offdate);
+    $interval = date_diff($pickupdate, $dropoffdate);
+    $total = $interval->format("%R%a") * $charge_per_day;
+
+    if (!$pick_up_time or !$pick_update or !$drop_offtime or !$drop_offdate or !$customer_email or !$customer_title or !$customer_firstname or !$customer_lastname or !$licenceno or !$customer_mobile) {
+        echo "All Fields are Required";
+    } else {
+        // trigger an email notification once a company's vehicle is booked;
+        $request = [
+            "tx_ref" => time(),
+            "amount" => $total,
+            "currency" => "NGN",
+            "payment_options" => "card",
+            "redirect_url" => "http://localhost/myproject/resources/verifypayment.php",
+            "customer" => [
+                "email" => $customer_email,
+                "name" => $customer_name,
+                "phonenumber" => $customer_mobile
+            ],
+            "meta" => [
+                "consumer_id" => $customer_id,
+                "price" => $total
+            ],
+            "customizations" => [
+                "title" => "Paying for vehicle Rental",
+                "description" => "items bought from Vehika"
+            ]
+        ];
+
+        // call the flutterwave endpoint;
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.flutterwave.com/v3/payments",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($request),
+            CURLOPT_HTTPHEADER => array(
+                "Authorization: Bearer FLWSECK_TEST-3715e4c0f5f7bbfecfa631d6ff6f7667-X",
+                "Content-Type:application/json"
+            )
+        ));
+
+        $response = curl_exec($curl);
+
+        $res = json_decode($response);
+        if (isset($res->status) || $res->status == "success") {
+
+            $query = $conn->prepare("INSERT INTO tbl_vehicle_rent(vehicle_id, user_id, ip_add, vehicle_image, pickup_time, pickup_date, drop_off_time, drop_off_date, vehicle_type, vehicle_qty, customer_title, customer_firstname, customer_lastname, customer_email, customer_licenceno, customer_contact_number, customer_flight_number, status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+            $query->bind_param("ssssssssssssssssss", $veh_id, $user_id, $ip_add, $image1, $pick_up_time, $pick_update, $drop_offtime, $drop_offdate, $model_year, $vehicle_qty, $customer_title, $customer_firstname, $customer_lastname, $customer_email, $licenceno, $customer_mobile, $flightno, $status);
+            $query->execute();
+            sleep(5);
+            $link = $res->data->link;
+            redirect($link);
+        } else {
+
+            sleep(5);
+            set_message("Failed to process payment, Check internet connection");
+            // header("Location:" . $_SERVER['PHP_SELF']);
+            redirect("vehicledetails.php?vehicle_id= $veh_id");
+        }
+    }
+}
 ?>
