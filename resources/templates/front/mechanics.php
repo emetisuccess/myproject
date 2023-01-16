@@ -10,10 +10,14 @@
             <div class="col-md-12">
                 <div class="owl-carousel" data-autoplay="false" data-loop="true" data-responsive-lg="3"
                     data-responsive-md="2" data-responsive-sm="2" data-nav="false" data-dots="false" data-margin="60">
-                    <div class="vertical-item content-padding text-center
-										overflow-hidden">
+                    <?php
+                    $query = mysqli_query($conn, "SELECT * FROM tbl_mechanic");
+                    while ($data = fetch_assoc($query)) {
+                    ?>
+                    <div class="vertical-item content-padding text-center overflow-hidden">
                         <div class="item-media">
-                            <img src="images/team/01.jpg" alt="">
+                            <img src="/myproject-development/resources/uploads/<?php echo $data['mech_image1']; ?>"
+                                alt="image">
                             <div class="content-hover team-btn">
                                 <a href="team-single.php" class="btn btn-small btn-maincolor">Mail
                                     me</a>
@@ -21,151 +25,22 @@
                         </div>
                         <div class="item-content">
                             <h6 class="team-name fw-700">
-                                <a href="team-single.php">Melvin C. Williams</a>
+                                <a href="team-single.php"><?php echo $data['mech_fullname']; ?></a>
                             </h6>
                             <p>
                                 AutoDoc Manager
                             </p>
                             <p class="social-icons with-border">
-                                <span><a href="https://www.facebook.com/" class="fa fa-facebook
+                                <span><a href="https://www.facebook.com/<?php echo $data['mech_fullname']; ?>" class="fa fa-facebook
 														border-icon rounded-icon" title="facebook"></a></span>
-                                <span><a href="https://telegram.org/" class="fa fa-paper-plane
+                                <span><a href="https://telegram.org/<?php echo $data['mech_fullname']; ?>" class="fa fa-paper-plane
 														border-icon rounded-icon" title="telegram"></a></span>
-                                <span><a href="https://www.instagram.com/" class="fa fa-instagram
+                                <span><a href="https://www.instagram.com/<?php echo $data['mech_fullname']; ?>" class="fa fa-instagram
 														border-icon rounded-icon" title="instagram"></a></span>
                             </p>
                         </div>
                     </div>
-                    <div class="vertical-item content-padding text-center
-										overflow-hidden">
-                        <div class="item-media">
-                            <img src="images/team/02.jpg" alt="">
-                            <div class="content-hover team-btn">
-                                <a href="team-single.php" class="btn btn-small btn-maincolor">Mail
-                                    me</a>
-                            </div>
-                        </div>
-                        <div class="item-content">
-                            <h6 class="team-name fw-700">
-                                <a href="team-single.php">Kurt A. Schwartz</a>
-                            </h6>
-                            <p>
-                                AutoDoc Manager
-                            </p>
-                            <p class="social-icons with-border">
-                                <span><a href="https://www.facebook.com/" class="fa fa-facebook
-														border-icon rounded-icon" title="facebook"></a></span>
-                                <span><a href="https://telegram.org/" class="fa fa-paper-plane
-														border-icon rounded-icon" title="telegram"></a></span>
-                                <span><a href="https://www.instagram.com/" class="fa fa-instagram
-														border-icon rounded-icon" title="instagram"></a></span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="vertical-item content-padding text-center
-										overflow-hidden">
-                        <div class="item-media">
-                            <img src="images/team/03.jpg" alt="">
-                            <div class="content-hover team-btn">
-                                <a href="team-single.php" class="btn btn-small btn-maincolor">Mail
-                                    me</a>
-                            </div>
-                        </div>
-                        <div class="item-content">
-                            <h6 class="team-name fw-700">
-                                <a href="team-single.php">Trevor L. Puckett</a>
-                            </h6>
-                            <p>
-                                AutoDoc Manager
-                            </p>
-                            <p class="social-icons with-border">
-                                <span><a href="https://www.facebook.com/" class="fa fa-facebook
-														border-icon rounded-icon" title="facebook"></a></span>
-                                <span><a href="https://telegram.org/" class="fa fa-paper-plane
-														border-icon rounded-icon" title="telegram"></a></span>
-                                <span><a href="https://www.instagram.com/" class="fa fa-instagram
-														border-icon rounded-icon" title="instagram"></a></span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="vertical-item content-padding text-center
-										overflow-hidden">
-                        <div class="item-media">
-                            <img src="images/team/04.jpg" alt="">
-                            <div class="content-hover team-btn">
-                                <a href="team-single.php" class="btn btn-small btn-maincolor">Mail
-                                    me</a>
-                            </div>
-                        </div>
-                        <div class="item-content">
-                            <h6 class="team-name fw-700">
-                                <a href="team-single.php">Darryl L. Cordoba</a>
-                            </h6>
-                            <p>
-                                AutoDoc Manager
-                            </p>
-                            <p class="social-icons with-border">
-                                <span><a href="https://www.facebook.com/" class="fa fa-facebook
-														border-icon rounded-icon" title="facebook"></a></span>
-                                <span><a href="https://telegram.org/" class="fa fa-paper-plane
-														border-icon rounded-icon" title="telegram"></a></span>
-                                <span><a href="https://www.instagram.com/" class="fa fa-instagram
-														border-icon rounded-icon" title="instagram"></a></span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="vertical-item content-padding text-center
-										overflow-hidden">
-                        <div class="item-media">
-                            <img src="images/team/05.jpg" alt="">
-                            <div class="content-hover team-btn">
-                                <a href="team-single.php" class="btn btn-small btn-maincolor">Mail
-                                    me</a>
-                            </div>
-                        </div>
-                        <div class="item-content">
-                            <h6 class="team-name fw-700">
-                                <a href="team-single.php">Aaron M. Lee</a>
-                            </h6>
-                            <p>
-                                AutoDoc Manager
-                            </p>
-                            <p class="social-icons with-border">
-                                <span><a href="https://www.facebook.com/" class="fa fa-facebook
-														border-icon rounded-icon" title="facebook"></a></span>
-                                <span><a href="https://telegram.org/" class="fa fa-paper-plane
-														border-icon rounded-icon" title="telegram"></a></span>
-                                <span><a href="https://www.instagram.com/" class="fa fa-instagram
-														border-icon rounded-icon" title="instagram"></a></span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="vertical-item content-padding text-center
-										overflow-hidden">
-                        <div class="item-media">
-                            <img src="images/team/06.jpg" alt="">
-                            <div class="content-hover team-btn">
-                                <a href="team-single.php" class="btn btn-small btn-maincolor">Mail
-                                    me</a>
-                            </div>
-                        </div>
-                        <div class="item-content">
-                            <h6 class="team-name fw-700">
-                                <a href="team-single.php">Ronald E. Conway</a>
-                            </h6>
-                            <p>
-                                AutoDoc Manager
-                            </p>
-                            <p class="social-icons with-border">
-                                <span><a href="https://www.facebook.com/" class="fa fa-facebook
-														border-icon rounded-icon" title="facebook"></a></span>
-                                <span><a href="https://telegram.org/" class="fa fa-paper-plane
-														border-icon rounded-icon" title="telegram"></a></span>
-                                <span><a href="https://www.instagram.com/" class="fa fa-instagram
-														border-icon rounded-icon" title="instagram"></a></span>
-                            </p>
-                        </div>
-                    </div>
+                    <?php } ?>
                 </div><!-- .team-carousel -->
             </div>
             <div class="divider-2"></div>

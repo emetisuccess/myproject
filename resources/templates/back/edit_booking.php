@@ -2,9 +2,9 @@
 //function for validation alert messages
 // messageAlert();
 
-if (isset($_GET["edit_vehicle"])) {
+if (isset($_GET["edit_booking"])) {
 
-    $id = $_GET["edit_vehicle"];
+    $id = $_GET["edit_booking"];
 
     $result = $conn->query("SELECT a.id, a.vehicle_brand_id, a.vehicle_cat_id, a.model, a.make, a.engine_type, a.fuel_type, a.vehicle_mileage, a.fuel_economy, a.payload_capacity, a.engine_power, a.torque, a.vin, a.year_manufacture, a.price, a.vehicle_qty, a.vehicle_image, a.keywords, b.brand_name, b.brand_id, c.cat_title, c.cat_id FROM tbl_vehicle AS a INNER JOIN categories AS c ON c.cat_id = a.vehicle_cat_id INNER JOIN brands AS b ON b.brand_id = a.vehicle_brand_id WHERE a.id='$id'");
 

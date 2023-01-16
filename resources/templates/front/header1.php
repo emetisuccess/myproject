@@ -21,27 +21,26 @@
                             </li>
                             <!-- eof pages -->
                             <li>
-                                <a href="services.php">Services</a>
+                                <a href="#">Services</a>
                                 <ul>
-                                    <h5 class="text-white">Coming Soon</h5>
                                     <li>
                                         <a href="towing.php">Towing</a>
                                     </li>
                                     <li>
-                                        <a href="#">Car Lease/Hire</a>
+                                        <a href="vehiclelease.php">Car Lease/Hire</a>
                                     </li>
                                     <li>
-                                        <a href="#">Driver Services</a>
+                                        <a href="drivers.php">Driver Services</a>
                                     </li>
                                     <li>
-                                        <a href="#">Vehicle Maintenance</a>
+                                        <a href="mechanic.php">Vehicle Maintenance</a>
                                     </li>
-                                    <li>
-                                        <a href="#">Courier/Logistics</a>
-                                    </li>
+                                    <!-- <li>
+                                        <a href="courier.php">Courier/Logistics</a>
+                                    </li> -->
                                 </ul>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="insurance.php">Insurance</a>
                                 <ul>
                                     <h5 class="text-white">Coming Soon</h5>
@@ -55,7 +54,7 @@
                                         <a href="#">Vehicle Insurance</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> -->
                             <li>
                                 <a href="about.php">About Us</a>
                             </li>

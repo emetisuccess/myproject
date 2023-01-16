@@ -1,5 +1,4 @@
 <h2 class="page-title p-4">Manage Vehicle</h2>
-
 <div class="mb-4"><a href="index.php?add_vehicle" class="btn btn-dark btn-sm">Add Vehicle</a></div>
 <?php display_message(); ?>
 <div class="text-center">
@@ -8,7 +7,6 @@
             <tr>
                 <th>SN</th>
                 <th>Image</th>
-                <th>Brand</th>
                 <th>Model</th>
                 <th>Make</th>
                 <th>Engine Type</th>

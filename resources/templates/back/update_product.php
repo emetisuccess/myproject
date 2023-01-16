@@ -6,7 +6,6 @@ if (isset($_GET['update_sparepart_product'])) {
 
     // query the database;
     $result = $conn->query("SELECT a.id, a.product_cat_id, a.product_brand_id, a.product_name, a.product_price, a.product_image, a.product_qty, a.product_desc, a.product_keywords, a.trending_product, b.brand_name, b.brand_id, c.pro_cat_title, c.pro_cat_id FROM tbl_products AS a INNER JOIN brands AS b ON a.product_brand_id=b.brand_id INNER JOIN product_categories AS c ON a.product_cat_id=c.pro_cat_id WHERE a.id='$id'");
-
     // get the number of rows
     $count = mysqli_num_rows($result);
 
